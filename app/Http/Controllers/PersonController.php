@@ -6,32 +6,41 @@ use Illuminate\Http\Request;
 use App\Entities\Company;
 use App\Entities\Individual;
 
-class ActingAreaController extends Controller
+class PersonController extends Controller
 {
     use ApiRestfulTrait;
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
-
 
     public function store(Request $request)
     {
+        $isIndividual = $request->get("cpf");
+        $data = $request->all();
 
-        $pes =  App\Entities\Person::create(["name" => "gilberto"]);
-        $pf =  App\Entities\Individual::create(["person_id" => $pes->id,"birth_date" => "1990-12-24", "cpf" => rand(1, 1000)]);
-        $pf->person()->save($pes);
-        $pf->person->personable;
-        $pat =  App\Entities\Patient::create(["person_id" => $pf->person_id]);
-
-        DB::transaction(function () use ($request) {
-            $data = $request->all();
-            return response()->json(($request->get("cpf") ? Individual::create($data) : Company::create($data))->person()->create($data), 201);
+        DB::transaction(function () use ($data,$isIndividual) {
+            return response()->json(
+                ($isIndividual ?
+                 Individual::create($data) :
+                 Company::create($data)
+                 )->person()->create($data),
+                 201
+            );
         });
+    }
+
+    public function update(Request $request, $id)
+    {
+        $isIndividual = $request->get("cpf");
+        $data = $request->all();
+
+        DB::transaction(function () use ($id,$data,$isIndividual) {
+            $pes = Person::findOrFail($id)->update($data);
+            $pes->{($isIndividual?"individual":"company")}()->update($data);
+            return response()->json($pes, 200);
+        });
+    }
+
+    public function addresses(Request $request,$id)
+    {
+      $addresses = Person::findOrFail($request->get("person_id"))->adresses()->paginate($request->get("limit")?:30);
+      return response()->json($addresses,200 );
     }
 }
