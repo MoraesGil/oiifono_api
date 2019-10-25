@@ -15,4 +15,9 @@ class Company extends Model
     {
         return $this->belongsTo(Person::class);
     }
+
+    public function healthPlans()
+    {
+        return $this->hasMany(HealthPlan::class,'company_id');
+    }
 }

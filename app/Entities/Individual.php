@@ -3,12 +3,11 @@
 namespace App\Entities;
 use App\Entities\Person;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Individual extends Model
 {
     protected $primaryKey = "person_id";
-    protected $fillable = ["birth_date", "cpf", "rg","sex"];
+    protected $fillable = ["birth_date", "cpf", "rg","sex","disabilities"];
     public $timestamps = false;
 
     public function person()
@@ -16,10 +15,12 @@ class Individual extends Model
         return $this->belongsTo(Person::class,"id","person_id");
     }
 
-    public function patient()
+    public function hospitalization()
     {
-        return $this->hasOne(Patient::class, "person_id","person_id");
+        return $this->hasOne(Hospitalization::class,'id','person_id');
     }
+
+
 
 
 }

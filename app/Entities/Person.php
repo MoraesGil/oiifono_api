@@ -10,9 +10,11 @@ class Person extends Model
 {
     protected $fillable = ["name", "nickname"];
 
-    public function patient()
+    public function parent()
     {
-        return $this->hasOne(Individual::class);
+        return $this->belongsToMany(Person::class, 'relations', 'person_id', 'parent_id')
+        ->withTimestamps()
+        ->withPivot('order', 'kinship');
     }
 
     public function individual()

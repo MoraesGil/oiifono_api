@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class City extends Model
 {
 
-    protected $fillable = ['id', 'name', 'uf'];
+    protected $fillable = ['id','name', 'uf'];
     public $timestamps = false;
 
     public function state()
     {
         return $this->belongsTo(State::class);
     }
+
 }
