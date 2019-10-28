@@ -12,6 +12,6 @@ class Doctor extends Model
 
     public function person()
     {
-        return $this->belongsTo(Individual::class,"id","person_id");
+        return $this->belongsTo(Individual::class, "id", "person_id");
     }
 }

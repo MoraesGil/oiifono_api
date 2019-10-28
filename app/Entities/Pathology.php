@@ -9,5 +9,4 @@ class Pathology extends Model
 
     protected $fillable = ['label', 'description'];
     public $timestamps = false;
-
 }

@@ -1,24 +1,25 @@
 <?php
+
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Entities\Person;
-use App\Entities\TherapeuticPlan;
 
 class Schedule extends Model
 {
-    protected $fillable = ['label', 'type','start_at','end_at','terapeutic_plan_id','reschedule_id'];
+    protected $fillable = ['label', 'type', 'start_at', 'end_at', 'therapy_id', 'parent_id'];
 
-    public function cities()
+    public function people()
     {
-        return $this->hasMany(Person::class);
+        return $this->belongsToMany(Person::class, 'people_schedule')->withPivot(['host', 'confirmed']);
     }
 
-    public function fromSchedule(){
-        return $this->belongsTo(Schedule::class,'reschedule_id');
+    public function parent()
+    {
+        return $this->belongsTo(Schedule::class, 'parent_id');
     }
 
-    public function fromTerapy(){
-        return $this->belongsTo(TherapeuticPlan::class,'reschedule_id');
+    public function therapy()
+    {
+        return $this->belongsTo(Therapy::class);
     }
 }

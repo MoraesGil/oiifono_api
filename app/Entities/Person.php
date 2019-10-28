@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entities;
+
 use App\Entities\Address;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Individual;
@@ -13,8 +14,8 @@ class Person extends Model
     public function parent()
     {
         return $this->belongsToMany(Person::class, 'relations', 'person_id', 'parent_id')
-        ->withTimestamps()
-        ->withPivot('order', 'kinship');
+            ->withTimestamps()
+            ->withPivot('order', 'kinship');
     }
 
     public function individual()
@@ -30,5 +31,10 @@ class Person extends Model
     public function address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function schedules()
+    {
+        return $this->belongsToMany(Schedule::class, 'people_schedule')->withPivot(['host', 'confirmed']);
     }
 }

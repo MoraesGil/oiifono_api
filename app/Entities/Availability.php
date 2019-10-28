@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Availability extends Model
 {
 
-    protected $fillable = ['id', 'person_id', 'dayOfWeek','start_at','end_at'];
+    protected $fillable = ['id', 'person_id', 'dayOfWeek', 'start_at', 'end_at'];
 
     public function person()
     {
