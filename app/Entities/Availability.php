@@ -8,6 +8,7 @@ class Availability extends Model
 {
 
     protected $fillable = ['id', 'person_id', 'dayOfWeek', 'start_at', 'end_at'];
+    public $timestamps = false;
 
     public function person()
     {

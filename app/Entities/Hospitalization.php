@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Hospitalization extends Model
 {
     protected $fillable = ["patient_id", "health_plan_id"];
-    public $timestamps = false;
 
     public function individual()
     {

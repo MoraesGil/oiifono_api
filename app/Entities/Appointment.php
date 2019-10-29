@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     protected $fillable = ['overview'];
-    public $timestamps = false;
 
     public function hospitalization()
     {
@@ -32,5 +31,10 @@ class Appointment extends Model
     public function objectives()
     {
         return $this->belongsToMany(Objective::class, 'done_objectives');
+    }
+
+    public function evolution()
+    {
+        return $this->belongsToMany(Question::class, 'interview_answers')->withPivot(['option_id', 'answer']);
     }
 }
