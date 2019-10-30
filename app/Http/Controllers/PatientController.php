@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Entities\Person;
 
 
-class ActingAreaController extends Controller
+class PatientController extends Controller
 {
     use ApiRestfulTrait;
     /**

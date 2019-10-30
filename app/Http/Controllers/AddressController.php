@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Entities\Address;
 use App\Entities\Person;
 
-class PersonController extends Controller
+class AddressController extends Controller
 {
     use ApiRestfulTrait;
 

@@ -1,16 +1,16 @@
 version : '3'
 
-services:  
+services:
   api_srv:
     build: .docker/api-srv
     ports:
       - "3000:80"
     volumes:
-      - ./OiiFonoAPI:/usr/share/nginx
+      - ./:/var/www/myapp
     networks:
-      - internal 
-      
-  mysql_srv: 
+      - internal
+
+  mysql_srv:
     image: mysql:5.7
     ports:
       - "3306:3306"
@@ -18,9 +18,9 @@ services:
       - .docker/dbdata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: oiifono
-      MYSQL_ROOT_PASSWORD: A[na[EZJF{:FzC+m
+      MYSQL_ROOT_PASSWORD: superpassword
     networks:
-      - internal  
+      - internal
 networks:
   internal:
     driver: bridge

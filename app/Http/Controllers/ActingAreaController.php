@@ -13,11 +13,11 @@ class ActingAreaController extends Controller
      */
     public function __construct()
     {
-
+        dd('oi mundo');
     }
 
     public function index(Request $request)
-    { 
+    {
         return $this->getData($request);
     }
     //
