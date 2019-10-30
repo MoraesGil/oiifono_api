@@ -42,9 +42,11 @@ $factory->define(Therapy::class, function (Hospitalization $hospitalization, Doc
     ];
 });
 
-$factory->define(Objective::class, function (Faker $faker, ) {
+$factory->define(Objective::class, function (Faker $faker,Pathology $pathology, Strategy $strategy) {
     return [
-        'label' => $faker->text(45),
-        'description' => $faker->boolean(80) ? $faker->text(255) : ""
+        'description' => $faker->boolean(80) ? $faker->text(255) : "",
+        'pathology'=> $pathology->id,
+        'strategy'=> $strategy->id,
+
     ];
 });
