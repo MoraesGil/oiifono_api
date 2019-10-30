@@ -14,7 +14,7 @@ class CreateHospitalizationTable extends Migration
     {
         Schema::create('hospitalization', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('patient_id')->unsigned();
+            $table->integer('person_id')->unsigned();
             $table->integer('health_plan_id')->unsigned()->nullable();
             $table->timestamp('discharge')->nullable();
             $table->text('discharge_by')->nullable();

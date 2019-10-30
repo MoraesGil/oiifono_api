@@ -15,7 +15,7 @@ class CreateEvolutionsTable extends Migration
         Schema::create('evolutions', function (Blueprint $table) {
             $table->integer('appointment_id')->unsigned();
             $table->integer('question_id')->unsigned();
-            $table->integer('options_id');
+            $table->integer('options_id')->nullable();
             $table->string('answer', 200)->nullable();
 
             $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('no action')->onUpdate('no action');
