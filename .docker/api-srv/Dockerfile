@@ -13,5 +13,5 @@ RUN mkdir storage/
 RUN mkdir bootstrap/
 RUN chmod -R 777 storage/
 RUN chown -R www-data: storage bootstrap
-# COPY /.docker/api-srv/default.conf /etc/nginx/conf.d/default.conf
-# cp -f /var/www/myapp/.docker/api-srv/default.conf /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/
+WORKDIR /var/www/myapp
