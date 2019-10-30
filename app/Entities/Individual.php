@@ -2,9 +2,9 @@
 
 namespace App\Entities;
 
-use App\Entities\Person;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Entities\Person;
+use App\Entities\Hospitalization;
 class Individual extends Model
 {
     protected $primaryKey = "person_id";
@@ -13,11 +13,11 @@ class Individual extends Model
 
     public function person()
     {
-        return $this->belongsTo(Person::class, "id", "person_id");
+        return $this->belongsTo(Person::class, "person_id", "person_id");
     }
 
-    public function hospitalization()
+    public function hospitalizations()
     {
-        return $this->hasOne(Hospitalization::class, 'id', 'person_id');
+        return $this->hasMany(Hospitalization::class, 'person_id', 'person_id');
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Entities;
 
-use App\Entities\Individual;
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\Individual;
+use App\Entities\Doctor;
+use App\Entities\Therapy;
 
 class Hospitalization extends Model
 {
@@ -14,24 +16,13 @@ class Hospitalization extends Model
         return $this->belongsTo(Individual::class, "person_id");
     }
 
-
-    /**
-     * Get a doctor info who give dischange to patient
-     *
-     * @return Doctor
-     */
     public function discharger()
     {
-        return $this->hasOne(Doctor::class, 'id', 'person_id');
+        return $this->belongsTo(Doctor::class, 'person_id', 'dischange_doctor_id');
     }
 
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function therapy()
+    public function therapies()
     {
-        return $this->belongsTo(Therapy::class);
+        return $this->hasMany(Therapy::class);
     }
 }

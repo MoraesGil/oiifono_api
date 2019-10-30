@@ -3,7 +3,8 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Entities\Person;
+use App\Entities\Therapy;
 class Schedule extends Model
 {
     protected $fillable = ['label', 'type', 'start_at', 'end_at', 'therapy_id', 'parent_id'];

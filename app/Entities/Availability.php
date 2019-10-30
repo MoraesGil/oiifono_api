@@ -3,7 +3,7 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Entities\Person;
 class Availability extends Model
 {
 

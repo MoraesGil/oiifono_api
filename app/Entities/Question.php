@@ -3,7 +3,8 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Entities\City;
+use App\Entities\Protocol;
+use App\Entities\Option;
 
 class Question extends Model
 {

@@ -3,6 +3,10 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\Therapy;
+use App\Entities\Strategy;
+use App\Entities\Pathology;
+use App\Entities\Appointment;
 
 class Objective extends Model
 {

@@ -2,10 +2,11 @@
 
 namespace App\Entities;
 
-use App\Entities\Address;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Individual;
 use App\Entities\Company;
+use App\Entities\Address;
+use App\Entities\Schedule;
 
 class Person extends Model
 {

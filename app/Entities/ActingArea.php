@@ -9,5 +9,9 @@ class ActingArea extends Model
 {
     use EntityValidatorTrait;
     protected $fillable = ['label', 'description'];
-    public $timestamps = false;
+
+    public function pathologies()
+    {
+        return $this->hasMany(Pathology::class);
+    }
 }

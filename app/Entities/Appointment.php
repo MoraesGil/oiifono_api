@@ -3,7 +3,12 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Entities\Hospitalization;
+use App\Entities\Doctor;
+use App\Entities\Schedule;
+use App\Entities\Objective;
+use App\Entities\Question;
+use App\Entities\HealthPlan;
 class Appointment extends Model
 {
     protected $fillable = ['overview'];
