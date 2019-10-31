@@ -20,7 +20,7 @@ use App\Entities\HealthPlan;
 $factory->define(Address::class, function (Faker $faker) {
     return [
         'city_id' => City::inRandomOrder()->first(),
-        'address' => $faker->streetName,
+        'address' => $faker->address,
         'district' => $faker->words(4),
         'zipcode' => $faker->postcode,
         'complements' => $faker->text(20)

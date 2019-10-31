@@ -43,8 +43,8 @@ $factory->define(Therapy::class, function (Faker $faker) {
 /**
  * Trigger Objective therapy creation
  */
-$factory->afterCreating(Therapy::class, function (Faker $faker, $terapy) {
-    $terapy->saveMany(factory(Objective::class,$faker->numberBetween(1, 4))->make());
+$factory->afterCreating(Therapy::class, function ($therapy, $faker) {
+    $therapy->saveMany(factory(Objective::class,$faker->numberBetween(1, 4))->make());
 });
 
 

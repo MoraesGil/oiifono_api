@@ -24,13 +24,15 @@ $factory->state(Person::class, 'company', function (Faker $faker) {
 
 $factory->state(Person::class, 'male', function (Faker $faker) {
   return [
-    'name' => $faker->name('male')
+    'name' => $faker->name('male'),
+    'picture' => "https://randomuser.me/api/portraits/med/men/".$faker->numberBetween(1, 90).".jpg"
   ];
 });
 
 $factory->state(Person::class, 'female', function (Faker $faker) {
   return [
-    'name' => $faker->name('female')
+    'name' => $faker->name('female'),
+    'picture'=> "https://randomuser.me/api/portraits/med/women/".$faker->numberBetween(1, 90).".jpg"
   ];
 });
 
