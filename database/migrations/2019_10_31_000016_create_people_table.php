@@ -26,11 +26,11 @@ class CreatePeopleTable extends Migration
         });
 
         Schema::table('availabilities', function (Blueprint $table) {
-            $table->foreign('person')->references('id')->on('people')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('person_id')->references('id')->on('people')->onDelete('no action')->onUpdate('no action');
         });
 
         Schema::table('companies', function (Blueprint $table) {
-            $table->foreign('person_id')->references('id')->on('people')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::table('contacts', function (Blueprint $table) {
@@ -42,7 +42,7 @@ class CreatePeopleTable extends Migration
         });
 
         Schema::table('individuals', function (Blueprint $table) {
-            $table->foreign('person_id')->references('id')->on('people')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('person_id')->references('id')->on('people')->onDelete('no action')->onUpdate('cascade');
         });
 
     }
@@ -60,7 +60,7 @@ class CreatePeopleTable extends Migration
         });
 
         Schema::table('availabilities', function (Blueprint $table) {
-            $table->dropForeign(['person']);
+            $table->dropForeign(['person_id']);
         });
 
         Schema::table('companies', function (Blueprint $table) {

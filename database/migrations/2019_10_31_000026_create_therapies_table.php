@@ -17,7 +17,6 @@ class CreateTherapiesTable extends Migration
             $table->integer('hospitalization_id')->unsigned();
             $table->integer('doctor_id')->unsigned();
             $table->string('description', 255);
-            $table->boolean('active')->default(0);
             $table->softDeletes();
             $table->timestamps();
 

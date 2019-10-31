@@ -14,10 +14,11 @@ class CreatePathologiesTable extends Migration
     {
         Schema::create('pathologies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label', 100);
+            $table->string('cid', 45);
+            $table->string('label', 100)->comment('ID from CRC32 CID');
             $table->integer('acting_area_id')->unsigned()->nullable();
             $table->string('description', 255)->nullable();
-            $table->string('cid', 45)->nullable();
+            $table->timestamps();
 
             $table->foreign('acting_area_id')->references('id')->on('acting_areas')->onDelete('no action')->onUpdate('no action');
         });

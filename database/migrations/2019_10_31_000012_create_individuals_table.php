@@ -23,7 +23,7 @@ class CreateIndividualsTable extends Migration
         });
 
         Schema::table('hospitalization', function (Blueprint $table) {
-            $table->foreign('patient_id')->references('person_id')->on('individuals')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('person_id')->references('person_id')->on('individuals')->onDelete('cascade')->onUpdate('cascade');
         });
 
     }
@@ -37,7 +37,7 @@ class CreateIndividualsTable extends Migration
     {
 
         Schema::table('hospitalization', function (Blueprint $table) {
-            $table->dropForeign(['patient_id']);
+            $table->dropForeign(['person_id']);
         });
 
         Schema::drop('individuals');

@@ -13,7 +13,7 @@ class CreateQuestionOptionsTable extends Migration
     public function up()
     {
         Schema::create('question_options', function (Blueprint $table) {
-            $table->integer('option_id');
+            $table->integer('option_id')->unsigned();
             $table->integer('question_id')->unsigned();
             $table->tinyInteger('group');
 

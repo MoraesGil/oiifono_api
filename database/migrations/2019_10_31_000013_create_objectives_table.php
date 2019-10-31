@@ -16,7 +16,7 @@ class CreateObjectivesTable extends Migration
             $table->integer('id')->unsigned();
             $table->integer('therapy_id')->unsigned();
             $table->integer('pathology_id')->unsigned();
-            $table->integer('estrategy_id')->unsigned();
+            $table->integer('strategy_id')->unsigned();
             $table->tinyInteger('repeat')->comment('times of repeat this session
 ');
             $table->tinyInteger('minutes');

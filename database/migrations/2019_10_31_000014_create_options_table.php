@@ -16,7 +16,7 @@ class CreateOptionsTable extends Migration
             $table->increments('id')->comment('PHP CRC32');
             $table->string('label', 100);
             $table->tinyInteger('lines')->default(0);
-            $table->integer('parent_id')->nullable();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('parent_id')->references('id')->on('options')->onDelete('no action')->onUpdate('no action');
         });

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActingAreasTable extends Migration
+class CreateAvailabilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateActingAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('acting_areas', function (Blueprint $table) {
+        Schema::create('availabilities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label', 45);
-            $table->string('description', 255)->nullable();
+            $table->integer('person_id')->unsigned();
+            $table->tinyInteger('dayOfWeek');
+            $table->time('start_at');
+            $table->time('end_at');
         });
     }
 
@@ -26,6 +28,6 @@ class CreateActingAreasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('acting_areas');
+        Schema::drop('availabilities');
     }
 }

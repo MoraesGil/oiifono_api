@@ -13,13 +13,14 @@ class CreateStrategiesTable extends Migration
     public function up()
     {
         Schema::create('strategies', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->comment('ID from CRC32 label');
             $table->string('label', 100);
             $table->string('description', 255);
+            $table->timestamps();
         });
 
         Schema::table('objectives', function (Blueprint $table) {
-            $table->foreign('estrategy_id')->references('id')->on('strategies')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('strategy_id')->references('id')->on('strategies')->onDelete('no action')->onUpdate('no action');
         });
 
     }
@@ -33,7 +34,7 @@ class CreateStrategiesTable extends Migration
     {
 
         Schema::table('objectives', function (Blueprint $table) {
-            $table->dropForeign(['estrategy_id']);
+            $table->dropForeign(['strategy_id']);
         });
 
         Schema::drop('strategies');

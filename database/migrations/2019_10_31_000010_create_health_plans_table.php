@@ -14,8 +14,8 @@ class CreateHealthPlansTable extends Migration
     {
         Schema::create('health_plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label', 45);
             $table->integer('company_id')->unsigned();
+            $table->string('label', 45);
 
             $table->foreign('company_id')->references('person_id')->on('companies')->onDelete('no action')->onUpdate('no action');
         });
