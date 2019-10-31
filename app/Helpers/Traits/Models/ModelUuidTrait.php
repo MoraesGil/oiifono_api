@@ -21,13 +21,13 @@ trait ModelUuidTrait
 
         $stringId = array_reduce($data, function ($carry, $item) {
             try {
-                $carry .= strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $item));
+                $carry .= iconv('UTF-8', 'ASCII//TRANSLIT', $item);
             } catch (\Throwable $th) {
                 \Log::info($th->getMessage());
             }
             return $carry;
         }, "");
-
-        return crc32($stringId);
+        $lowerString = strtolower($stringId);
+        return sprintf("%u",crc32($lowerString));
     }
 }

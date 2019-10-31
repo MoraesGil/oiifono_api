@@ -13,22 +13,15 @@ $factory->state(Hospitalization::class, 'discharged', function (Faker $faker) {
     return
         [
             'create_at' => $hospitalization_date,
-            'discharge' => $$discharge,
+            'discharge' => $discharge,
             'discharge_by' => $faker->text(45),
             'discharge_doctor_id' => Doctor::inRandomOrder()->first(),
         ];
 });
 
-$factory->state(Hospitalization::class, 'healthPlan', function (Faker $faker) {
-    return [
-        'health_plan_id' => $faker->boolean(75) ? HealthPlan::inRandomOrder()->first() : null
-    ];
-});
-
 $factory->define(Hospitalization::class, function (Faker $faker) {
     return [
-        'label' => $faker->text(45),
-        'description' => $faker->boolean(80) ? $faker->text(255) : "",
+        'health_plan_id' => $faker->boolean(75) ? HealthPlan::inRandomOrder()->first() : null,
         'create_at' => $faker->dateTimeThisYear()
     ];
 });

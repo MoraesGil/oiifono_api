@@ -20,4 +20,9 @@ class Individual extends Model
     {
         return $this->hasMany(Hospitalization::class, 'person_id', 'person_id');
     }
+
+    public function hospitalization()
+    {
+        return $this->hospitalizations()->whereNull('discharge')->first();
+    }
 }

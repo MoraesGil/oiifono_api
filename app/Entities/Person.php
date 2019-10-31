@@ -9,6 +9,8 @@ use App\Entities\Address;
 use App\Entities\Schedule;
 use App\Entities\Doctor;
 use App\Entities\Availability;
+use App\Entities\Contact;
+
 class Person extends Model
 {
     protected $fillable = ["name", "nickname"];
@@ -38,6 +40,11 @@ class Person extends Model
     public function address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(Address::class);
     }
 
     public function availability()

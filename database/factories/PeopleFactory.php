@@ -1,7 +1,9 @@
 <?php
 
+use App\Entities\Address;
 use App\Entities\Availability;
 use App\Entities\Company;
+use App\Entities\Contact;
 use App\Entities\Doctor;
 use App\Entities\Individual;
 use App\Entities\Person;
@@ -32,8 +34,9 @@ $factory->state(Person::class, 'female', function (Faker $faker) {
   ];
 });
 
-$factory->afterCreating(Person::class, function (Faker $faker, $person) {
-    dump('create address here');
+$factory->afterCreating(Person::class, function ($person,$faker) {
+  $person->address()->save(factory(Address::class)->make());
+  $person->contacts()->saveMany(factory(Contact::class,4)->make());
 });
 
 $factory->define(Availability::class, function (Faker $faker) {

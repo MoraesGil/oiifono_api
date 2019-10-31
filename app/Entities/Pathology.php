@@ -9,7 +9,7 @@ class Pathology extends Model
 {
     //id from uuid of cid
     use ModelUuidTrait;
-    private static $uuidFields = ['label'];
+    private static $uuidFields = ['cid'];
 
     protected $fillable = ['cid','label', 'description'];
 

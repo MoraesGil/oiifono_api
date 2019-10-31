@@ -5,12 +5,16 @@ use App\Entities\Company;
 use App\Entities\Doctor;
 use App\Entities\Individual;
 use App\Entities\Person;
+use App\Entities\Hospitalization;
+
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 
 class PeopleSeeder extends Seeder
 {
+
+    private $faker;
     /**
      * Run the database seeds.
      *
@@ -18,66 +22,68 @@ class PeopleSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
+        $this->faker = Faker::create();
 
-        $maxDoctors = 22;
-        $maxIndividuals = 100;
-        $maxCompanies = 10;
-        $availabilitiesPerDoctor = 7;
-        $percentOfDeadPeople = 5;
+        $amountDoctors = 30;
+        $amountHealthPlan = 5;
+        $amountPatients = 500;
 
-        $doctorsToGenerate = 2;//max(0, $maxDoctors - Doctor::count());
-        $individualsToGenerate = max(0, $maxIndividuals - Doctor::count());
-        $companiesToGenerate = max(0, $maxCompanies - Doctor::count());
-
-        $this->generateDoctors($doctorsToGenerate, $availabilitiesPerDoctor);
-        $this->generateCompanies($companiesToGenerate);
-        $this->generateIndividuals($individualsToGenerate, $percentOfDeadPeople, $faker);
+        $this->generateDoctors($amountDoctors);
+        // $this->generateHealthPlan($amountHealthPlan);
+        // $this->generatePatients($amountPatients);
     }
 
-    protected function generateDoctors($amount, $availabilitiesPerDoctor)
+    protected function generateDoctors($amount)
     {
-        DB::transaction(function () use ($amount, $availabilitiesPerDoctor) {
+        // Person::with(["doctor","individual","company"])->whereHas('company')->get()
+        factory(Doctor::class, $amount)
+            ->make()
+            ->each(function (Doctor $doctor) {
+                DB::transaction(function () use ($doctor) {
+                    $individual = factory(Individual::class)->make();
+                    $genders = ['m' => 'male', 'f' => 'female'];
+                    $person = factory(Person::class)->state($genders[$individual->sex])->create();
+                    $person->individual()->save($individual);
 
-            factory(Doctor::class, $amount)
-                ->make()
-                ->each(function (Doctor $doctor) use ($availabilitiesPerDoctor) {
-                    $person = factory(Person::class)->create();
-                    $availabilities = factory(Availability::class, $availabilitiesPerDoctor)->make();
+                    if ($this->faker->boolean(20))
+                        $person->company()->save(factory(Company::class)->make());
 
+                    $availabilities = factory(Availability::class, 10)->make();
                     $person->availability()->saveMany($availabilities);
+
                     $person->doctor()->save($doctor);
                 });
-        });
+            });
     }
 
-    protected function generateCompanies($amount)
+    protected function generateHealthPlan($amount)
     {
-        DB::transaction(function () use ($amount) {
-            factory(Company::class, $amount)
-                ->make()
-                ->each(function (Company $company) {
+        factory(Company::class, $amount)
+            ->make()
+            ->each(function (Company $company) {
+                DB::transaction(function () use ($company) {
                     $person = factory(Person::class)->state('company')->create();
                     $person->company()->save($company);
+                    $person->company->healthPlans()->saveMany(factory(HealthPlan::class)->make());
                 });
-        });
+            });
     }
 
-    protected function generateIndividuals($amount, $percentOfDeadPeople)
+    protected function generatePatients($amount)
     {
-        DB::transaction(function () use ($amount, $percentOfDeadPeople) {
-            $dead = round($amount * $percentOfDeadPeople / 100);
-            $alive = $amount - $dead;
+        factory(Individual::class, $amount)
+            ->make()
+            ->each(function (Individual $individual) {
+                DB::transaction(function () use ($individual) {
+                    $genders = ['m' => 'male', 'f' => 'female'];
+                    $person = factory(Person::class)->state($genders[$individual->sex])->create();
+                    $person->individual()->save($individual);
 
-            $bindIndividualToPerson = function (Individual $individual) {
-                $genders = ['m' => 'male', 'f' => 'female'];
-
-                $person = factory(Person::class)->state($genders[$individual->sex])->create();
-                $person->individual()->save($individual);
-            };
-
-            factory(Individual::class, $dead)->state('dead')->make()->each($bindIndividualToPerson);
-            factory(Individual::class, $alive)->make()->each($bindIndividualToPerson);
-        });
+                    if ($this->faker->boolean(80)){
+                        $person->individual->hospitalizations()->saveMany(factory(Hospitalization::class,3)->state('discharged')->make());
+                        $person->individual->hospitalizations()->saveMany(factory(Hospitalization::class,1)->make());
+                    }
+                });
+            });
     }
 }

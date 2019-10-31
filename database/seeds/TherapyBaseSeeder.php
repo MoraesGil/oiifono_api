@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Entities\Pathology;
 use App\Entities\ActingArea;
-class ActingAreasTableSeeder extends Seeder
+use App\Entities\Strategy;
+
+class TherapyBaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +14,6 @@ class ActingAreasTableSeeder extends Seeder
      */
     public function run()
     {
-
         $actingAreas = [
             "Audiologia",
             "Fonoaudiologia Educacional",
@@ -26,10 +28,15 @@ class ActingAreasTableSeeder extends Seeder
             "Neuropsicologia"
         ];
 
-        if (DB::table('acting_areas')->count() === count($actingAreas))
-            return true;
-        foreach ($actingAreas as $value) {
-            ActingArea::create(["label"=>$value]);
+        if (DB::table('acting_areas')->count() < count($actingAreas)){
+            foreach ($actingAreas as $value) {
+                ActingArea::create(["label"=>$value]);
+            }
         }
+
+        if(Pathology::count() < 500)
+        factory(Pathology::class,500)->create();
+        if(Strategy::count() < 500)
+        factory(Strategy::class,500)->create();
     }
 }
