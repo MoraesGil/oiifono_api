@@ -21,7 +21,7 @@ class CreatePeopleTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('adresses', function (Blueprint $table) {
+        Schema::table('addresses', function (Blueprint $table) {
             $table->foreign('person_id')->references('id')->on('people')->onDelete('no action')->onUpdate('no action');
         });
 
@@ -55,7 +55,7 @@ class CreatePeopleTable extends Migration
     public function down()
     {
 
-        Schema::table('adresses', function (Blueprint $table) {
+        Schema::table('addresses', function (Blueprint $table) {
             $table->dropForeign(['person_id']);
         });
 

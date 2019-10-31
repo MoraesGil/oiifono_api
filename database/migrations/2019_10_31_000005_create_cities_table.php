@@ -18,7 +18,7 @@ class CreateCitiesTable extends Migration
             $table->char('uf', 2);
         });
 
-        Schema::table('adresses', function (Blueprint $table) {
+        Schema::table('addresses', function (Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('no action')->onUpdate('no action');
         });
 
@@ -32,7 +32,7 @@ class CreateCitiesTable extends Migration
     public function down()
     {
 
-        Schema::table('adresses', function (Blueprint $table) {
+        Schema::table('addresses', function (Blueprint $table) {
             $table->dropForeign(['city_id']);
         });
 

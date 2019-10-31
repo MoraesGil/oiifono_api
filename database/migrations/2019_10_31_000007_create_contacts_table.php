@@ -15,10 +15,10 @@ class CreateContactsTable extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->integer('id');
             $table->integer('person_id')->unsigned();
+            $table->string('description', 45);
             $table->tinyInteger('type')->default(0)->comment('0 - email
 1 - phone');
             $table->boolean('main')->default(0);
-            $table->string('description', 45)->nullable();
         });
     }
 
