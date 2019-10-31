@@ -13,7 +13,7 @@ class Individual extends Model
 
     public function person()
     {
-        return $this->belongsTo(Person::class, "person_id", "person_id");
+        return $this->belongsTo(Person::class);
     }
 
     public function hospitalizations()

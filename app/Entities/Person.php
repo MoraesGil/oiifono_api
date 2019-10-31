@@ -7,7 +7,8 @@ use App\Entities\Individual;
 use App\Entities\Company;
 use App\Entities\Address;
 use App\Entities\Schedule;
-
+use App\Entities\Doctor;
+use App\Entities\Availability;
 class Person extends Model
 {
     protected $fillable = ["name", "nickname"];
@@ -24,6 +25,11 @@ class Person extends Model
         return $this->hasOne(Individual::class);
     }
 
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class);
@@ -32,6 +38,11 @@ class Person extends Model
     public function address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function availability()
+    {
+        return $this->hasMany(Availability::class, 'person_id', 'id');
     }
 
     public function schedules()
