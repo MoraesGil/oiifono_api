@@ -32,6 +32,10 @@ $factory->state(Person::class, 'female', function (Faker $faker) {
   ];
 });
 
+$factory->afterCreating(Person::class, function (Faker $faker, $person) {
+    dump('create address here');
+});
+
 $factory->define(Availability::class, function (Faker $faker) {
   $time1 = $faker->time();
   $time2 = $faker->time();

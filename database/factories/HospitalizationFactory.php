@@ -19,9 +19,11 @@ $factory->state(Hospitalization::class, 'discharged', function (Faker $faker) {
         ];
 });
 
-$factory->state(Hospitalization::class, 'healthPlan', [
-    'health_plan_id' => $faker->boolean(75) ? HealthPlan::inRandomOrder()->first() : null
-]);
+$factory->state(Hospitalization::class, 'healthPlan', function (Faker $faker) {
+    return [
+        'health_plan_id' => $faker->boolean(75) ? HealthPlan::inRandomOrder()->first() : null
+    ];
+});
 
 $factory->define(Hospitalization::class, function (Faker $faker) {
     return [
