@@ -21,7 +21,7 @@ $factory->state(Hospitalization::class, 'discharged', function (Faker $faker) {
 
 $factory->define(Hospitalization::class, function (Faker $faker) {
     return [
-        'health_plan_id' => $faker->boolean(75) ? HealthPlan::inRandomOrder()->first() : null,
+        'health_plan_id' => $faker->boolean(80) ? HealthPlan::inRandomOrder()->first()->id : null,
         'created_at' => $faker->dateTimeThisYear()
     ];
 });

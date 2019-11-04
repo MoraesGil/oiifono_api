@@ -5,6 +5,8 @@ use App\Entities\Address;
 use App\Entities\Contact;
 use App\Entities\City;
 use App\Entities\HealthPlan;
+use App\Entities\Availability;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,20 @@ $factory->define(Contact::class, function (Faker $faker) {
 $factory->define(HealthPlan::class, function (Faker $faker) {
     return [
         'label' =>  $faker->text(40)
+    ];
+});
+
+$factory->define(Availability::class, function (Faker $faker) {
+    $max = 20;
+    $min = 7;
+
+    $start =  Carbon::now()->startOfDay()->addHour($faker->numberBetween($min, $max))->addMinutes($faker->randomElement([0,15,30,45]));
+    $end = $start->addHour($faker->numberBetween(7, 20))->addMinutes($faker->randomElement([0,15,30,45]));
+
+    return [
+        'dayOfWeek' => $faker->randomNumber() % 7,
+        'start_at' => $start->toTimeString(),
+        'end_at' => $end->toTimeString()
     ];
 });
 

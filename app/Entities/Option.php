@@ -28,7 +28,7 @@ class Option extends Model
     {
         parent::boot();
 
-        self::creating(function ($model) {
+        self::saving(function ($model) {
             $model["id"] = self::generateUuid($model);
         });
     }

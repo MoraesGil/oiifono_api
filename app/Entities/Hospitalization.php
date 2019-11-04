@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Entities\Individual;
 use App\Entities\Doctor;
 use App\Entities\Therapy;
+use App\Entities\HealthPlan;
 
 class Hospitalization extends Model
 {
@@ -24,5 +25,10 @@ class Hospitalization extends Model
     public function therapies()
     {
         return $this->hasMany(Therapy::class);
+    }
+
+    public function healthPlan()
+    {
+        return $this->belongsTo(HealthPlan::class,'id','health_plan_id');
     }
 }

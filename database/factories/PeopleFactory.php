@@ -1,7 +1,6 @@
 <?php
 
 use App\Entities\Address;
-use App\Entities\Availability;
 use App\Entities\Company;
 use App\Entities\Contact;
 use App\Entities\Doctor;
@@ -71,12 +70,3 @@ $factory->define(Doctor::class, function (Faker $faker) {
   ];
 });
 
-$factory->define(Availability::class, function (Faker $faker) {
-    $time1 = $faker->time();
-    $time2 = $faker->time();
-    return [
-        'dayOfWeek' => $faker->randomNumber() % 7,
-        'start_at' => min($time1, $time2),
-        'end_at' => max($time1, $time2)
-    ];
-});

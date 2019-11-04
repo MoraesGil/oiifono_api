@@ -28,6 +28,7 @@ trait ModelUuidTrait
             return $carry;
         }, "");
         $lowerString = strtolower($stringId);
-        return sprintf("%u",crc32($lowerString));
+        $id = sprintf("%u",crc32($lowerString)) ;
+        return $id != "0" ? $id : NULL;
     }
 }

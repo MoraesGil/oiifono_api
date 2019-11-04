@@ -18,6 +18,6 @@ class Company extends Model
 
     public function healthPlans()
     {
-        return $this->hasMany(HealthPlan::class, 'company_id');
+        return $this->hasMany(HealthPlan::class,'company_id');
     }
 }

@@ -48,8 +48,10 @@ class PeopleSeeder extends Seeder
                     if ($this->faker->boolean(20))
                         $person->company()->save(factory(Company::class)->make());
 
-                    $availabilities = factory(Availability::class, 10)->make();
-                    $person->availability()->saveMany($availabilities);
+                    for ($i=0; $i <= 6; $i++) {
+                        $availabilities = factory(Availability::class, 10)->make(['dayOfWeek' => $i]);
+                        $person->availability()->saveMany($availabilities);
+                    }
 
                     $person->doctor()->save($doctor);
                 });
