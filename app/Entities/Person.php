@@ -37,9 +37,9 @@ class Person extends Model
         return $this->hasOne(Company::class);
     }
 
-    public function address()
+    public function addresses()
     {
-        return $this->hasOne(Address::class);
+        return $this->hasMany(Address::class);
     }
 
     public function contacts()

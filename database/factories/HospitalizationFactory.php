@@ -12,16 +12,16 @@ $factory->state(Hospitalization::class, 'discharged', function (Faker $faker) {
 
     return
         [
-            'create_at' => $hospitalization_date,
-            'discharge' => $discharge,
-            'discharge_by' => $faker->text(45),
-            'discharge_doctor_id' => Doctor::inRandomOrder()->first(),
+            'created_at' => $hospitalization_date,
+            'discharged' => $discharge,
+            'discharged_by' => $faker->text(45),
+            'discharged_doctor_id' => Doctor::inRandomOrder()->first()->person_id,
         ];
 });
 
 $factory->define(Hospitalization::class, function (Faker $faker) {
     return [
         'health_plan_id' => $faker->boolean(75) ? HealthPlan::inRandomOrder()->first() : null,
-        'create_at' => $faker->dateTimeThisYear()
+        'created_at' => $faker->dateTimeThisYear()
     ];
 });

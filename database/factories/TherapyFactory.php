@@ -8,6 +8,7 @@ use App\Entities\Pathology;
 use App\Entities\Strategy;
 use App\Entities\Therapy;
 use App\Entities\Objective;
+use App\Entities\Doctor;
 
 $factory->define(ActingArea::class, function (Faker $faker) {
     return [
@@ -35,7 +36,7 @@ $factory->define(Strategy::class, function (Faker $faker) {
 $factory->define(Therapy::class, function (Faker $faker) {
     return [
         'description' => $faker->boolean(80) ? $faker->text(255) : "",
-        'doctor_id' => Doctor::inRandomOrder()->first()->id,
+        'doctor_id' => Doctor::inRandomOrder()->first()->person_id,
         'hospitalization_id' => Hospitalization::inRandomOrder()->first()->id
     ];
 });
@@ -45,6 +46,13 @@ $factory->define(Therapy::class, function (Faker $faker) {
  */
 $factory->afterCreating(Therapy::class, function ($therapy, $faker) {
     $therapy->saveMany(factory(Objective::class,$faker->numberBetween(1, 4))->make());
+});
+
+
+$factory->afterCreating(Hospitalization::class, function ($hospitalization, $faker) {
+    $hospitalization->therapies()->save(factory(Therapy::class, $faker->numberBetween(1, 4))->make([
+        'deleted_at'=> $hospitalization->discharged
+    ]));
 });
 
 

@@ -6,7 +6,7 @@ use App\Entities\Doctor;
 use App\Entities\Individual;
 use App\Entities\Person;
 use App\Entities\Hospitalization;
-
+use App\Entities\HealthPlan;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
@@ -25,12 +25,12 @@ class PeopleSeeder extends Seeder
         $this->faker = Faker::create();
 
         $amountDoctors = 30;
-        $amountHealthPlan = 5;
+        $amountHealthPlan = 20;
         $amountPatients = 500;
 
         $this->generateDoctors($amountDoctors);
-        // $this->generateHealthPlan($amountHealthPlan);
-        // $this->generatePatients($amountPatients);
+        $this->generateHealthPlan($amountHealthPlan);
+        $this->generatePatients($amountPatients);
     }
 
     protected function generateDoctors($amount)
@@ -64,7 +64,7 @@ class PeopleSeeder extends Seeder
                 DB::transaction(function () use ($company) {
                     $person = factory(Person::class)->state('company')->create();
                     $person->company()->save($company);
-                    $person->company->healthPlans()->saveMany(factory(HealthPlan::class)->make());
+                    $person->company->healthPlans()->save(factory(HealthPlan::class)->make());
                 });
             });
     }
@@ -79,10 +79,11 @@ class PeopleSeeder extends Seeder
                     $person = factory(Person::class)->state($genders[$individual->sex])->create();
                     $person->individual()->save($individual);
 
-                    if ($this->faker->boolean(80)){
-                        $person->individual->hospitalizations()->saveMany(factory(Hospitalization::class,3)->state('discharged')->make());
-                        $person->individual->hospitalizations()->saveMany(factory(Hospitalization::class,1)->make());
-                    }
+                    //make a hospitalizations
+                    if ($this->faker->boolean(80)) //discharged
+                        $person->individual->hospitalizations()->saveMany(factory(Hospitalization::class, 3)->state('discharged')->make());
+                    if ($this->faker->boolean(80))
+                        $person->individual->hospitalizations()->save(factory(Hospitalization::class)->make());
                 });
             });
     }

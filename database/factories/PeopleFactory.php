@@ -37,18 +37,8 @@ $factory->state(Person::class, 'female', function (Faker $faker) {
 });
 
 $factory->afterCreating(Person::class, function ($person,$faker) {
-  $person->address()->save(factory(Address::class)->make());
+  $person->addresses()->save(factory(Address::class)->make());
   $person->contacts()->saveMany(factory(Contact::class,4)->make());
-});
-
-$factory->define(Availability::class, function (Faker $faker) {
-  $time1 = $faker->time();
-  $time2 = $faker->time();
-  return [
-    'dayOfWeek' => $faker->randomNumber() % 7,
-    'start_at' => min($time1, $time2),
-    'end_at' => max($time1, $time2)
-  ];
 });
 
 $factory->define(Individual::class, function (Faker $faker) {
@@ -79,4 +69,14 @@ $factory->define(Doctor::class, function (Faker $faker) {
   return [
     'register' => $faker->numerify('#####')
   ];
+});
+
+$factory->define(Availability::class, function (Faker $faker) {
+    $time1 = $faker->time();
+    $time2 = $faker->time();
+    return [
+        'dayOfWeek' => $faker->randomNumber() % 7,
+        'start_at' => min($time1, $time2),
+        'end_at' => max($time1, $time2)
+    ];
 });

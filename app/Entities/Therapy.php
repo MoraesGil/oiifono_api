@@ -3,9 +3,9 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Entities\Doctor;
 use App\Entities\Hospitalization;
 use App\Entities\Objective;
+use App\Entities\Doctor;
 
 class Therapy extends Model
 {
@@ -13,7 +13,7 @@ class Therapy extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Doctor::class,'person_id','doctor_id');
     }
 
     public function hospitalization()
