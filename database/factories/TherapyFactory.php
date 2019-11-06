@@ -22,7 +22,7 @@ $factory->define(Pathology::class, function (Faker $faker) {
         'label' => $faker->text(45),
         'description' => $faker->boolean(80) ? $faker->text($faker->numberBetween(20,100)) : "",
         'cid' => $faker->word(3).$faker->numberBetween(1,999).$faker->word(3),
-        'acting_area_id' => ActingArea::inRandomOrder()->first()->id
+        'acting_area_id' => ActingArea::inRandomOrder()->limit(1)->first()->id
     ];
 });
 
@@ -36,16 +36,27 @@ $factory->define(Strategy::class, function (Faker $faker) {
 $factory->define(Therapy::class, function (Faker $faker) {
     return [
         'description' => $faker->boolean(80) ? $faker->text(255) : "",
-        'doctor_id' => Doctor::inRandomOrder()->first()->person_id,
-        'hospitalization_id' => Hospitalization::inRandomOrder()->first()->id
+        'doctor_id' => Doctor::inRandomOrder()->limit(1)->first()->person_id,
+        'hospitalization_id' => Hospitalization::inRandomOrder()->limit(1)->first()->id
     ];
 });
 
-/**
- * Trigger Objective therapy creation
- */
 $factory->afterCreating(Therapy::class, function ($therapy, $faker) {
     $therapy->objectives()->saveMany(factory(Objective::class,$faker->numberBetween(1, 4))->make());
+
+    // Doctor::inRandomOrder()->limit(1)->first()
+
+    // factory(Schedule::class,$faker->numberBetween(1, 4))->create([
+    //     'label'=> $faker->text(50),
+    //     'type'=>null,
+    //     'start_at'=>null,
+    //     'end_at'=>null,
+    //     'therapy_id'=>$therapy->id,
+    //     'parent_id'=>null,
+    //     'absence_by'=>null
+    // ])
+    //  $therapy->hospitalization->individual->id
+    // $therapy->hospitalization->individual->id
 });
 
 /**
@@ -53,8 +64,8 @@ $factory->afterCreating(Therapy::class, function ($therapy, $faker) {
  */
 $factory->define(Objective::class, function (Faker $faker) {
     return [
-        'pathology_id'=> Pathology::inRandomOrder()->first()->id,
-        'strategy_id'=> Strategy::inRandomOrder()->first()->id,
+        'pathology_id'=> Pathology::inRandomOrder()->limit(1)->first()->id,
+        'strategy_id'=> Strategy::inRandomOrder()->limit(1)->first()->id,
         'repeat'=>$faker->numberBetween(1, 15),
         'minutes'=> $faker->boolean(80) ? 15 : 30,
         'description' => $faker->text(50)

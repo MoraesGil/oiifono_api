@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Entities\Hospitalization;
 use App\Entities\Objective;
 use App\Entities\Doctor;
+use App\Entities\Schedule;
 
 class Therapy extends Model
 {
@@ -24,5 +25,10 @@ class Therapy extends Model
     public function objectives()
     {
         return $this->hasMany(Objective::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }
