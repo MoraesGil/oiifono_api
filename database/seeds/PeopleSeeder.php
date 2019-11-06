@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
+
 use App\Entities\Availability;
 use App\Entities\Company;
 use App\Entities\Doctor;
@@ -7,9 +11,7 @@ use App\Entities\Individual;
 use App\Entities\Person;
 use App\Entities\Hospitalization;
 use App\Entities\HealthPlan;
-use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
+use App\Entities\Therapy;
 
 class PeopleSeeder extends Seeder
 {
@@ -24,9 +26,9 @@ class PeopleSeeder extends Seeder
     {
         $this->faker = Faker::create();
 
-        $amountDoctors = 30;
-        $amountHealthPlan = 20;
-        $amountPatients = 500;
+        $amountDoctors = 5;
+        $amountHealthPlan = 10;
+        $amountPatients = $amountDoctors*10;
 
         $this->generateDoctors($amountDoctors);
         $this->generateHealthPlan($amountHealthPlan);
@@ -48,7 +50,7 @@ class PeopleSeeder extends Seeder
                     if ($this->faker->boolean(20))
                         $person->company()->save(factory(Company::class)->make());
 
-                    for ($i=0; $i <= 6; $i++) {
+                    for ($i = 0; $i <= 6; $i++) {
                         $availabilities = factory(Availability::class, 10)->make(['dayOfWeek' => $i]);
                         $person->availability()->saveMany($availabilities);
                     }
@@ -82,10 +84,24 @@ class PeopleSeeder extends Seeder
                     $person->individual()->save($individual);
 
                     //make a hospitalizations
-                    if ($this->faker->boolean(80)) //discharged
+                    if ($this->faker->boolean(80)) {
                         $person->individual->hospitalizations()->saveMany(factory(Hospitalization::class, 3)->state('discharged')->make());
-                    if ($this->faker->boolean(80))
+                        $person->individual->hospitalizations->each(function (Hospitalization $hospitalization) {
+                            factory(Therapy::class)->create([
+                                'hospitalization_id' => $hospitalization->id,
+                                'deleted_at' => $hospitalization->discharged
+                            ]);
+                        });
+                    } //discharged
+
+                    if ($this->faker->boolean(80)) {
                         $person->individual->hospitalizations()->save(factory(Hospitalization::class)->make());
+                        $hospitalization_opened = $person->individual->hospitalizations()->whereNull('discharged')->first();
+
+                        factory(Therapy::class)->create([
+                            'hospitalization_id' => $hospitalization_opened->id,
+                        ]);
+                    }
                 });
             });
     }

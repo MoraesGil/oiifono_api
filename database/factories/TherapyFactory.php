@@ -45,24 +45,16 @@ $factory->define(Therapy::class, function (Faker $faker) {
  * Trigger Objective therapy creation
  */
 $factory->afterCreating(Therapy::class, function ($therapy, $faker) {
-    $therapy->saveMany(factory(Objective::class,$faker->numberBetween(1, 4))->make());
+    $therapy->objectives()->saveMany(factory(Objective::class,$faker->numberBetween(1, 4))->make());
 });
-
-
-$factory->afterCreating(Hospitalization::class, function ($hospitalization, $faker) {
-    $hospitalization->therapies()->save(factory(Therapy::class, $faker->numberBetween(1, 4))->make([
-        'deleted_at'=> $hospitalization->discharged
-    ]));
-});
-
 
 /**
  * this define must be called by Therapy::class
  */
 $factory->define(Objective::class, function (Faker $faker) {
     return [
-        'pathology'=> Pathology::inRandomOrder()->first()->id,
-        'strategy'=> Strategy::inRandomOrder()->first()->id,
+        'pathology_id'=> Pathology::inRandomOrder()->first()->id,
+        'strategy_id'=> Strategy::inRandomOrder()->first()->id,
         'repeat'=>$faker->numberBetween(1, 15),
         'minutes'=> $faker->boolean(80) ? 15 : 30,
         'description' => $faker->text(50)
