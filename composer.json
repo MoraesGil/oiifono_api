@@ -13,7 +13,7 @@
         "laravel/tinker": "^1.0",
         "lucascudo/laravel-pt-br-localization": "^1.0",
         "moraesgil/api-restful-trait": "^1.0",
-        "tymon/jwt-auth": "^0.5.12"
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
