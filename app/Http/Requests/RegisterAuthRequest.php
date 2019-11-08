@@ -24,14 +24,8 @@ class RegisterAuthRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|string|max:200',
-            // 'email' => 'required|string|email|max:255|unique:users',
-            // 'password' => 'required|string|min:6|confirmed',
-            // 'cpf' => 'required|cpf|unique:individuals',
-            // 'register' => 'required|string|max:30|unique:doctors',
-            // 'birthdate' => 'required|date_format:d-m-Y|before:18 years ago',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6|max:10'
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed'
         ];
     }
 }

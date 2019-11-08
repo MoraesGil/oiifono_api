@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterAuthRequest;
 use App\Entities\User;
 use Illuminate\Http\Request;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiController extends Controller
 {
@@ -17,24 +17,11 @@ class ApiController extends Controller
     public function register(RegisterAuthRequest $request)
     {
         $data = $request->all();
-        DB::transaction(function () use ($data) {
-            $user  = User::create([
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-            ]);
 
-            // $person = $user->person()->create([
-            //     'name' => $data['name'],
-            // ]);
-
-            // $individual = $person->individual()->create([
-            //     'cpf' => $data['cpf'],
-            // ]);
-
-            // $doctor = $person->doctor()->create([
-            //     'register' => $data['register'],
-            // ]);
-        });
+        $user  = User::create([
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
         if ($this->loginAfterSignUp) {
             return $this->login($request);
@@ -46,53 +33,82 @@ class ApiController extends Controller
         ], 200);
     }
 
+    /**
+     * Get a JWT token via given credentials.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
-        $input = $request->only('email', 'password');
-        $jwt_token = null;
+        $credentials = $request->only('email', 'password');
 
-        if (!$jwt_token = JWTAuth::attempt($input)) {
-
-            return response()->json([
-                'success' => false,
-                'message' => trans('auth.failed'),
-            ], 401);
+        if ($token = $this->guard()->attempt($credentials)) {
+            return $this->respondWithToken($token);
         }
 
-        $objectToken = JWTAuth::setToken($jwt_token);
-        $expiration = JWTAuth::decode($objectToken->getToken())->get('exp');
-
-        return response()->json([
-            'access_token' => $jwt_token,
-            'token_type' => 'bearer',
-            'expires_in' => $expiration
-        ]);
+        return response()->json(['unauthorized' => trans('auth.failed')], 401);
     }
 
+    /**
+     * Log the user out (Invalidate the token)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout()
     {
-        try {
-            auth()->logout();
+        $this->guard()->logout();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User logged out successfully'
-            ]);
-        } catch (JWTException $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the user cannot be logged out'
-            ], 500);
-        }
+        return response()->json(['message' => 'Successfully logged out']);
     }
-
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function refresh()
     {
         return $this->respondWithToken($this->guard()->refresh());
     }
 
-    public function getAuthUser()
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
     {
-        return auth()->user();
+
+        $objectToken = JWTAuth::setToken($token);
+        $expiration = JWTAuth::decode($objectToken->getToken())->get('exp');
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $expiration
+        ]);
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+    public function guard()
+    {
+        return Auth::guard();
+    }
+
+    /**
+     * Get the authenticated User
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json($this->guard()->user());
     }
 }
