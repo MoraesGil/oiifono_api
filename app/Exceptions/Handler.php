@@ -13,8 +13,13 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
-    ];
+    \Illuminate\Auth\AuthenticationException::class,
+    \Illuminate\Auth\Access\AuthorizationException::class,
+    \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+    \Illuminate\Session\TokenMismatchException::class,
+    \Illuminate\Validation\ValidationException::class,
+
+  ];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.

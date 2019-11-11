@@ -53,7 +53,7 @@ $factory->define(Availability::class, function (Faker $faker) {
     $end = $start->addHour($faker->numberBetween(7, 20))->addMinutes($faker->randomElement([0,15,30,45]));
 
     return [
-        'dayOfWeek' => $faker->randomNumber() % 7,
+        'week_day' => $faker->randomNumber() % 7,
         'start_at' => $start->toTimeString(),
         'end_at' => $end->toTimeString()
     ];

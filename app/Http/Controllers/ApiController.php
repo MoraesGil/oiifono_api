@@ -18,7 +18,7 @@ class ApiController extends Controller
     {
         $data = $request->all();
 
-        $user  = User::create([
+        $user = User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

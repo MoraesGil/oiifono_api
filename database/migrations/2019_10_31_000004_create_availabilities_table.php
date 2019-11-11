@@ -15,7 +15,7 @@ class CreateAvailabilitiesTable extends Migration
         Schema::create('availabilities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('person_id')->unsigned();
-            $table->tinyInteger('dayOfWeek');
+            $table->tinyInteger('week_day');
             $table->time('start_at');
             $table->time('end_at');
         });

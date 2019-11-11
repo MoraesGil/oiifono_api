@@ -7,7 +7,6 @@ use App\Entities\City;
 use App\Entities\Person;
 class Address extends Model
 {
-
     protected $fillable = ['person_id', 'city_id', 'address', 'district', 'zipcode', 'complements'];
     public $timestamps = false;
 

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Entities\City;
-use Illuminate\Http\Request;
+use App\Http\Requests\TypeAheadRequest;
 
 class CityController extends Controller
 {
-    public function typeahead($query = ''){
-        return City::where('name', 'like', $query.'%')->limit(15)->get();
+    public function typeahead(TypeAheadRequest $request){
+        return City::where('name', 'like', '%'.$request->get("search_term").'%')->orderBy('name')->limit(15)->get();
     }
 }

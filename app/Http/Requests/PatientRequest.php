@@ -4,8 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DoctorRequest extends FormRequest
+class PatientRequest extends FormRequest
 {
+
+    const MALE = 'm';
+    const FEMALE = 'f';
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +17,7 @@ class DoctorRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,9 +29,11 @@ class DoctorRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:200',
-            'cpf' => 'required|cpf|formato_cpf|unique:individuals',
-            'register' => 'required|string|max:30|unique:doctors',
-            // 'birthdate' => 'required|date_format:d-m-Y|before:18 years ago',
+            'sex' => 'required|in:'.self::MALE.','.self::FEMALE,
+            'birthdate' => 'required|date|date_format:d-m-Y|before:tomorrow',
+            'cpf' => 'nullable|cpf|formato_cpf|unique:individuals',
+            'rg'=>'nullable|string|max:45',
+            'disabilities','nullable|string|max:100'
         ];
     }
 }

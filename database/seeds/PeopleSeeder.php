@@ -51,7 +51,7 @@ class PeopleSeeder extends Seeder
                         $person->company()->save(factory(Company::class)->make());
 
                     for ($i = 0; $i <= 6; $i++) {
-                        $availabilities = factory(Availability::class, 10)->make(['dayOfWeek' => $i]);
+                        $availabilities = factory(Availability::class, 10)->make(['week_day' => $i]);
                         $person->availability()->saveMany($availabilities);
                     }
 

@@ -9,8 +9,10 @@ use App\Entities\Schedule;
 use App\Entities\Objective;
 use App\Entities\Question;
 use App\Entities\HealthPlan;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Appointment extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['overview'];
 
     public function hospitalization()

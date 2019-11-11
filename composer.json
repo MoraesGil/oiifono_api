@@ -11,7 +11,6 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "lucascudo/laravel-pt-br-localization": "^1.0",
-        "moraesgil/api-restful-trait": "^1.0",
         "tymon/jwt-auth": "dev-develop",
         "laravellegends/pt-br-validator": "5.1.*"
     },

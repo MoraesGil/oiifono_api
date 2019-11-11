@@ -10,9 +10,10 @@ use App\Entities\Schedule;
 use App\Entities\Doctor;
 use App\Entities\Availability;
 use App\Entities\Contact;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Person extends Model
 {
+    use SoftDeletes;
     protected $fillable = ["name", "nickname"];
 
     public function parent()
@@ -44,7 +45,7 @@ class Person extends Model
 
     public function contacts()
     {
-        return $this->hasMany(Address::class);
+        return $this->hasMany(Contact::class);
     }
 
     public function availability()

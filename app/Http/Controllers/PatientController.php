@@ -1,28 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Traits\Controllers\ApiRestfulTrait;
-use Illuminate\Http\Request;
-use App\Entities\Person;
 
+use App\Entities\Person;
+use App\Http\Requests\PatientRequest;
 
 class PatientController extends Controller
 {
-    use ApiRestfulTrait;
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function store(PatientRequest $request)
     {
-
-    }
-
-
-    public function store(Request $request)
-    {
-
-
+        DB::transaction(function () use ($request) {
+            $pes = Person::create($request->all());
+            $pes->individuals()->create($request->all());
+        });
     }
 }

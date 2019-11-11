@@ -7,9 +7,10 @@ use App\Entities\Hospitalization;
 use App\Entities\Objective;
 use App\Entities\Doctor;
 use App\Entities\Schedule;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Therapy extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['hospitalization_id', 'doctor_id', 'description'];
 
     public function doctor()

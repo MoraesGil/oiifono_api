@@ -5,6 +5,8 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Person;
 use App\Entities\Hospitalization;
+use App\Helpers\BatmanBelt;
+
 class Individual extends Model
 {
     protected $primaryKey = "person_id";
@@ -25,4 +27,5 @@ class Individual extends Model
     {
         return $this->hospitalizations()->whereNull('discharge')->first();
     }
+
 }

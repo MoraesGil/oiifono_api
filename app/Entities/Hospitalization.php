@@ -7,10 +7,12 @@ use App\Entities\Individual;
 use App\Entities\Doctor;
 use App\Entities\Therapy;
 use App\Entities\HealthPlan;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Hospitalization extends Model
 {
+    use SoftDeletes;
     protected $fillable = ["patient_id", "health_plan_id"];
+    public $timestamps = false;
 
     public function individual()
     {
