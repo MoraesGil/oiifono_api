@@ -27,7 +27,7 @@ class RegisterAuthRequest extends FormRequest
             'cpf' => 'required|cpf|unique:individuals',
             'name' => 'required|string|max:200',
             'register' => 'required|string|max:30|unique:doctors',
-            'birthdate' => 'required|date_format:d-m-Y|before:18 years ago',
+            // 'birthdate' => 'required|date_format:d-m-Y|before:18 years ago',
         ];
     }
 }

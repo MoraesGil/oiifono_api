@@ -12,3 +12,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
     Route::get('me', 'ApiController@me');
 });
+
+Route::get('cities/tp/{name}', 'citycontroller@typeahead');
+
+
+Route::resource('/person', 'PersonController', ['except' => ['create', 'edit', 'show']]);
