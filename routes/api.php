@@ -6,6 +6,7 @@ Route::post('refresh', 'ApiController@refresh');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
+    Route::patch('password', 'userController@updatePassword');
     Route::get('me', 'ApiController@me');
 
     Route::get('cities', 'citycontroller@typeahead');
