@@ -24,7 +24,12 @@ class AddressRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'person_id' => "required|exists:person,person_id",
+            'city_id' => "required|exists:cities,city_id",
+            'address' => "required|max:255",
+            'district' => "nullable|max:100",
+            'complements'=> "nullable|max:100",
+            'zipcode' => "nullable|formato_cep",
         ];
     }
 }
