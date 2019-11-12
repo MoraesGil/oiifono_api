@@ -31,9 +31,9 @@ class PatientRequest extends FormRequest
             'name' => 'required|string|max:200',
             'sex' => 'required|in:'.self::MALE.','.self::FEMALE,
             'birthdate' => 'required|date|date_format:d-m-Y|before:tomorrow',
-            'cpf' => 'nullable|cpf|formato_cpf|unique:individuals',
-            'rg'=>'nullable|string|max:45',
             'disabilities','nullable|string|max:100'
+            // 'cpf' => 'nullable|cpf|formato_cpf|unique:individuals',
+            // 'rg'=>'nullable|string|max:45',
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterAuthRequest;
-use App\Entities\User;
+use App\Entities\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -14,14 +14,21 @@ class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
 
+    public function __construct($loginAfterSignUp = true){
+        $this->loginAfterSignUp = $loginAfterSignUp;
+    }
+
     public function register(RegisterAuthRequest $request)
     {
-        $data = $request->all();
 
-        $user = User::create([
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = DB::transaction(function () use ($request) {
+            return  Person::create($request->all())
+            ->user()
+            ->create([
+                'email' => $request->get('email'),
+                'password' => Hash::make($request->get('password'))
+            ]);
+        });
 
         if ($this->loginAfterSignUp) {
             return $this->login($request);

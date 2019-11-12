@@ -57,4 +57,9 @@ class Person extends Model
     {
         return $this->belongsToMany(Schedule::class, 'people_schedule')->withPivot(['host', 'confirmed']);
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }
