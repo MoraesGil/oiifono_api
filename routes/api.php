@@ -16,5 +16,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::resource('/person', 'PersonController', ['except' => ['create', 'edit', 'show']]);
 });
 
+Route::resource('/patient', 'PatientController', ['except' => ['create', 'edit', 'show']]);
 
 
