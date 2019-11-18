@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\Individual;
 use App\Entities\Person;
 use App\Http\Requests\PatientRequest;
 use Illuminate\Http\Request;
@@ -11,11 +10,15 @@ use Illuminate\Support\Facades\DB;
 class PatientController extends Controller
 {
 
-    public function index(Request $request)
+    public function typeahead(TypeAheadRequest $request)
     {
-        return response()->json(Individual::With('person')->paginate($request->get("limit")?:15), 200);
+        return Person::patients()->where('name', 'like', '%' . $request->get("search_term") . '%')->orderBy('name')->limit(15)->get();
     }
 
+    public function index(Request $request)
+    {
+        return response()->json(Person::patients()->with('individual')->paginate($request->get("limit") ?: 15), 200);
+    }
 
     public function store(PatientRequest $request)
     {

@@ -62,4 +62,8 @@ class Person extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public static function patients(){
+        return SELF::whereHas('individual');
+    }
 }
