@@ -10,7 +10,7 @@ class Question extends Model
 {
     use ModelUuidTrait;
 
-    private static $uuidFields = ['label'];
+    const UUID_FIELDS = ['label'];
     protected $fillable = ['id', 'label', 'lines', 'description'];
     public $timestamps = false;
 
@@ -29,8 +29,8 @@ class Question extends Model
     {
         parent::boot();
 
-        self::creating(function ($model) {
-            $model["id"] = self::generateUuid($model);
+        self::saving(function ($model) {
+            $model[$model->primaryKey] = self::generateUuid($model);;
         });
     }
 }

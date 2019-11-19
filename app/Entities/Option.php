@@ -10,7 +10,8 @@ class Option extends Model
 {
     use ModelUuidTrait;
 
-    private static $uuidFields = ['label','lines','parent'];
+    const UUID_FIELDS = ['label','lines','parent_id'];
+
     protected $fillable = ['id', 'label', 'lines', 'parent_id'];
     public $timestamps = false;
 
@@ -29,7 +30,7 @@ class Option extends Model
         parent::boot();
 
         self::saving(function ($model) {
-            $model["id"] = self::generateUuid($model);
+            $model[$model->primaryKey] = self::generateUuid($model);
         });
     }
 }

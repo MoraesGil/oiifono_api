@@ -2,6 +2,8 @@
 
 namespace App\Helpers\Traits\Models;
 
+use App\Helpers\BatmanBelt;
+
 trait ModelUuidTrait
 {
     /**
@@ -11,24 +13,10 @@ trait ModelUuidTrait
      * @param array $fields
      * @return INT CRC32 Int value
      */
-    private static function generateUuid($model)
+    private static function generateUuid($model): int
     {
-        $fields = self::$uuidFields ?: array_keys($model->getAttributes());
-
-        $data = array_filter($model->getAttributes(), function ($key) use ($fields) {
-            return in_array($key, $fields);
-        }, ARRAY_FILTER_USE_KEY);
-
-        $stringId = array_reduce($data, function ($carry, $item) {
-            try {
-                $carry .= iconv('UTF-8', 'ASCII//TRANSLIT', $item);
-            } catch (\Throwable $th) {
-                \Log::info($th->getMessage());
-            }
-            return $carry;
-        }, "");
-        $lowerString = strtolower($stringId);
-        $id = sprintf("%u",crc32($lowerString)) ;
-        return $id != "0" ? $id : NULL;
+        return BatmanBelt::generateUuid(
+            BatmanBelt::modelToValues($model, self::UUID_FIELDS)
+        );
     }
 }

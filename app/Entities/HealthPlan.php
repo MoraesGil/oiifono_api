@@ -11,7 +11,8 @@ class HealthPlan extends Model
     use SoftDeletes;
     use ModelUuidTrait;
 
-    private static $uuidFields = ['label'];
+    const UUID_FIELDS = ['label'];
+
     protected $fillable = ["label"];
     public $timestamps = false;
 
@@ -20,7 +21,7 @@ class HealthPlan extends Model
         parent::boot();
 
         self::saving(function ($model) {
-            $model["id"] = self::generateUuid($model);
+            $model[$model->primaryKey] = self::generateUuid($model);;
         });
     }
 

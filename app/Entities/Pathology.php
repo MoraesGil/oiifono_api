@@ -9,7 +9,7 @@ class Pathology extends Model
 {
     //id from uuid of cid
     use ModelUuidTrait;
-    private static $uuidFields = ['cid'];
+    const UUID_FIELDS = ['cid'];
 
     protected $fillable = ['cid','label', 'description'];
 
@@ -23,7 +23,7 @@ class Pathology extends Model
         parent::boot();
 
         self::saving(function ($model) {
-            $model["id"] = self::generateUuid($model);
+            $model[$model->primaryKey] = self::generateUuid($model);;
         });
     }
 }
