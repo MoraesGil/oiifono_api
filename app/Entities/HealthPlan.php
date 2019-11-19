@@ -4,26 +4,17 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Company;
-use App\Helpers\Traits\Models\ModelUuidTrait;
+use App\Helpers\Traits\Models\UuidCrc32;;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class HealthPlan extends Model
 {
     use SoftDeletes;
-    use ModelUuidTrait;
+    use UuidCrc32;
 
     const UUID_FIELDS = ['label'];
 
     protected $fillable = ["label"];
     public $timestamps = false;
-
-    public static function boot()
-    {
-        parent::boot();
-
-        self::saving(function ($model) {
-            $model[$model->primaryKey] = self::generateUuid($model);;
-        });
-    }
 
     public function company()
     {

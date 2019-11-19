@@ -4,11 +4,11 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Question;
-use App\Helpers\Traits\Models\ModelUuidTrait;
+use App\Helpers\Traits\Models\UuidCrc32;
 
 class Option extends Model
 {
-    use ModelUuidTrait;
+    use UuidCrc32;
 
     const UUID_FIELDS = ['label','lines','parent_id'];
 
@@ -25,12 +25,4 @@ class Option extends Model
         return $this->belongsToMany(Question::class, 'question_options')->withPivot(['group']);
     }
 
-    public static function boot()
-    {
-        parent::boot();
-
-        self::saving(function ($model) {
-            $model[$model->primaryKey] = self::generateUuid($model);
-        });
-    }
 }

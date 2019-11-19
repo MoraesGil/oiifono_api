@@ -3,24 +3,15 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\Traits\Models\ModelUuidTrait;
+use App\Helpers\Traits\Models\UuidCrc32;
 
 class Strategy extends Model
 {
     const UUID_FIELDS = ['label'];
 
-    use ModelUuidTrait;
+    use UuidCrc32;
 
     protected $fillable = ['label', 'description'];
     public $timestamps = false;
 
-
-    public static function boot()
-    {
-        parent::boot();
-
-        self::saving(function ($model) {
-            $model[$model->primaryKey] = self::generateUuid($model);;
-        });
-    }
 }

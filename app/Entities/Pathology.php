@@ -4,11 +4,11 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\ActingArea;
-use App\Helpers\Traits\Models\ModelUuidTrait;
+use App\Helpers\Traits\Models\UuidCrc32;
 class Pathology extends Model
 {
     //id from uuid of cid
-    use ModelUuidTrait;
+    use UuidCrc32;
     const UUID_FIELDS = ['cid'];
 
     protected $fillable = ['cid','label', 'description'];
@@ -16,14 +16,5 @@ class Pathology extends Model
     public function actingArea()
     {
         return $this->hasOne(ActingArea::class);
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        self::saving(function ($model) {
-            $model[$model->primaryKey] = self::generateUuid($model);;
-        });
     }
 }

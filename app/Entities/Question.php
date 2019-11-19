@@ -5,10 +5,10 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Protocol;
 use App\Entities\Option;
-use App\Helpers\Traits\Models\ModelUuidTrait;
+use App\Helpers\Traits\Models\UuidCrc32;
 class Question extends Model
 {
-    use ModelUuidTrait;
+    use UuidCrc32;
 
     const UUID_FIELDS = ['label'];
     protected $fillable = ['id', 'label', 'lines', 'description'];
@@ -30,7 +30,7 @@ class Question extends Model
         parent::boot();
 
         self::saving(function ($model) {
-            $model[$model->primaryKey] = self::generateUuid($model);;
+            $model[$model->primaryKey] = self::generateUuid($model);
         });
     }
 }
