@@ -26,8 +26,7 @@ class BatmanBelt
      * @return int CRC32 Int value
      */
     public static function generateUuid($values): int
-    {
-        dump($values);
+    { 
         $computedData = array_reduce($values, function ($carry, $item) {
             try {
                 $carry .= strtolower(self::cleanWhiteSpaces(self::cleanAccents($item)));
