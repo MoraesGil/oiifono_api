@@ -25,7 +25,7 @@ class BatmanBelt
      * @param array $values
      * @return int CRC32 Int value
      */
-    public static function generateUuid($values): int
+    public static function generateUuidCrc32($values): int
     {
         $computedData = array_reduce($values, function ($carry, $item) {
             try {
@@ -36,12 +36,8 @@ class BatmanBelt
             }
             return $carry;
         }, "");
-        $id = crc32($computedData);
 
-        if ($id == 0 || null)
-            throw new Exception("Too big ID, check you source data", 1);
-
-        return $id;
+        return crc32($computedData);
     }
 
     /**

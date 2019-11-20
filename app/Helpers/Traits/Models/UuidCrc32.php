@@ -13,16 +13,15 @@ trait UuidCrc32
      */
     public static function bootUuidCrc32()
     {
-        static::created(function ($model) {
-            $model->{$model->primaryKey} = BatmanBelt::generateUuid(
-                BatmanBelt::modelToValues($model, self::UUID_FIELDS)
-            );
-        });
-
         static::saving(function ($model) {
-            $model->{$model->primaryKey} = BatmanBelt::generateUuid(
+            $model->incrementing = false;
+            $model->{$model->primaryKey} = BatmanBelt::generateUuidCrc32(
                 BatmanBelt::modelToValues($model, self::UUID_FIELDS)
             );
+
+            if ($model->{$model->primaryKey} == 0 || null){
+                throw new Exception("unable to generate crc32, check your model data", 1);
+            }
         });
     }
 }
