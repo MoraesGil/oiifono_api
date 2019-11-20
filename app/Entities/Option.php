@@ -10,7 +10,7 @@ class Option extends Model
 {
     use UuidCrc32;
 
-    const UUID_FIELDS = ['label','lines','parent_id'];
+    const UUID_FIELDS = ['label', 'lines', 'parent_id'];
 
     protected $fillable = ['id', 'label', 'lines', 'parent_id'];
     public $timestamps = false;
@@ -20,9 +20,13 @@ class Option extends Model
         return $this->belongsTo(Option::class);
     }
 
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
+
     public function questions()
     {
         return $this->belongsToMany(Question::class, 'question_options')->withPivot(['group']);
     }
-
 }
