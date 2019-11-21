@@ -9,9 +9,4 @@ class Protocol extends Model
 {
     use SoftDeletes;
     protected $fillable = ['type', 'title'];
-
-    public function questions()
-    {
-        return $this->belongsToMany(Question::class, 'protocol_questions')->withPivot(['order']);
-    }
 }
