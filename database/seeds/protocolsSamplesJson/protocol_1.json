@@ -1,0 +1,212 @@
+{
+    "label": "AVALIAÇÃO EM MOTRICIDADE ORAL",
+    "type": 1,
+    "questions": [
+        {
+            "label": "POSTURA CORPORAL",
+            "description": "(ombros e cabeça)",
+            "options": [
+                {
+                    "label": "adequada",
+                    "group": 1
+                },
+                {
+                    "label": "inclinada",
+                    "group": 1
+                },
+                {
+                    "label": "anteriorizada",
+                    "group": 1
+                }
+            ]
+        },
+        {
+            "label": "Simetria facial",
+            "options": [
+                {
+                    "label": "Normal",
+                    "group": 1
+                },
+                {
+                    "label": "",
+                    "group": 1,
+                    "options": [
+                        {
+                            "label": "desvio D",
+                            "group": 2
+                        },
+                        {
+                            "label": "desvio E",
+                            "group": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Simetria facial",
+            "options": [
+                {
+                    "label": "mesocefálico",
+                    "group": 1
+                },
+                {
+                    "label": "dólicocefálico",
+                    "group": 1
+                },
+                {
+                    "label": "braquiocefálico",
+                    "group": 1
+                }
+            ]
+        },
+        {
+            "label": "ATM",
+            "description": "Alteração temporo mandibular",
+            "options": [
+                {
+                    "label": "sem alterações",
+                    "group": 1
+                },
+                {
+                    "label": "disfunção",
+                    "group": 1
+                }
+            ]
+        },
+        {
+            "label": "Músculo Masseter",
+            "options": [
+                {
+                    "label": "direito",
+                    "options": [
+                        {
+                            "label": "normotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipertonia",
+                            "group": 1
+                        }
+                    ]
+                },
+                {
+                    "label": "esquerdo",
+                    "options": [
+                        {
+                            "label": "normotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipertonia",
+                            "group": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Músculo Bucinador",
+            "options": [
+                {
+                    "label": "direito",
+                    "options": [
+                        {
+                            "label": "normotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipertonia",
+                            "group": 1
+                        }
+                    ]
+                },
+                {
+                    "label": "esquerdo",
+                    "options": [
+                        {
+                            "label": "normotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipertonia",
+                            "group": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Músculo Digástrico",
+            "options": [
+                {
+                    "label": "direito",
+                    "options": [
+                        {
+                            "label": "normotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipertonia",
+                            "group": 1
+                        }
+                    ]
+                },
+                {
+                    "label": "esquerdo",
+                    "options": [
+                        {
+                            "label": "normotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipotonia",
+                            "group": 1
+                        },
+                        {
+                            "label": "hipertonia",
+                            "group": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Músculo Masseter",
+            "options": [
+                {
+                    "label": "normotonia",
+                    "group": 1
+                },
+                {
+                    "label": "hipotonia",
+                    "group": 1
+                },
+                {
+                    "label": "hipertonia",
+                    "group": 1
+                }
+            ]
+        }
+    ]
+}
