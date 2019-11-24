@@ -1,0 +1,29 @@
+{
+    "person_id": 1,
+    "doctor_id": 21,
+    "description": "Reabilitação da musculatura orofacial",
+    "objectives":[
+        {
+            "therapy_id": 1,
+            "pathology_id": "3925099880",
+            "strategy": {
+                "id": 67556140,
+                "label": "Treino deglutitório"
+            },
+            "repeat": 10,
+            "minutes": 15,
+            "description": "Reintrodução da diete por via oral"
+        },
+        {
+            "therapy_id": 1,
+            "pathology_id": "3925099880",
+            "strategy": {
+                "id": null,
+                "label": "Manobra de cabeça fletida."
+            },
+            "repeat": 3,
+            "minutes": 10,
+            "description": "Gerenciar risco da disfagia durante alimentação."
+        }
+    ]
+}
