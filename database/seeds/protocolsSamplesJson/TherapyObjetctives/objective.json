@@ -1,10 +1,7 @@
 {
     "therapy_id": 1,
-    "pathology_id": "3816017392",
-    "strategy": {
-        "id": null,
-        "label": "Bico sorriso aberto"
-    },
+    "pathology": 3816017392,
+    "strategy": "Bico sorriso aberto",
     "repeat": 3,
     "minutes": 10,
     "description": "Adequar mobilidade orofacial"
