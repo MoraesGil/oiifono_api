@@ -11,4 +11,9 @@ class Question extends Model
     const UUID_FIELDS = ['label'];
     protected $fillable = ['label','description'];
     public $timestamps = false;
+
+    public function protocols()
+    {
+        return $this->belongsToMany(Protocol::class, 'protocol_questions')->using(ProtocolQuestion::class)->withPivot(['order']);
+    }
 }

@@ -23,8 +23,20 @@ class ProtocolRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'title' => 'required|max:45',
+                    'type' => 'required|numeric',
+                    'questions' => 'required|array',
+                    'questions.*.label' => 'required|max:45',
+                    'questions.*.description' => 'string|nullable|max:255',
+                    'questions.*.options' => ['required', 'array'],
+                    'questions.*.options.*' => [new \App\Rules\Option]
+                ];
+
+            default:
+                return [];
+        }
     }
 }

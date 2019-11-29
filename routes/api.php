@@ -22,5 +22,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('strategies', 'StrategyController@typeahead');
     Route::resource('objective', 'ObjectiveController');
 
+    Route::resource('protocol', 'ProtocolController');
 });
 
