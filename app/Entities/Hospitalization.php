@@ -8,11 +8,31 @@ use App\Entities\Doctor;
 use App\Entities\Therapy;
 use App\Entities\HealthPlan;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Hospitalization extends Model
 {
     use SoftDeletes;
-    protected $fillable = ["patient_id", "health_plan_id"];
+
+    protected $fillable = [
+        'person_id',
+        'health_plan_id',
+        'discharged',
+        'discharged_by',
+        'discharged_doctor_id'
+    ];
+
     public $timestamps = false;
+
+    /**
+     * Find a person's active Hospitalization. Create one if it doesn't exists.
+     */
+    public static function activeHospitalization($personId)
+    {
+        return Hospitalization::updateOrCreate([
+            'person_id' => $personId,
+            'discharged' => null,
+        ]);
+    }
 
     public function individual()
     {
@@ -31,6 +51,11 @@ class Hospitalization extends Model
 
     public function healthPlan()
     {
-        return $this->belongsTo(HealthPlan::class,'id','health_plan_id');
+        return $this->belongsTo(HealthPlan::class, 'id', 'health_plan_id');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 }
