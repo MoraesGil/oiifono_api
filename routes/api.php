@@ -23,5 +23,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::resource('objective', 'ObjectiveController');
 
     Route::resource('protocol', 'ProtocolController');
+    Route::resource('appointment', 'AppointmentController');
+    Route::get('appointment/{appointment}/evolution/', 'EvolutionController@index');
 });
 

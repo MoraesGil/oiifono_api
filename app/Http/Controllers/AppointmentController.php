@@ -3,17 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Appointment;
+use App\Entities\Hospitalization;
+use App\Http\Requests\AppointmentRequest;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public function store(AddressRequest $request)
+    public function store(AppointmentRequest $request)
     {
-        return response()->json(Appointment::create($request->all()), 201);
+        $hospitalizaion = Hospitalization::activeHospitalization($request->input('person_id'));
+
+        $appointment = $hospitalizaion->appointments()->create(
+            $request->only(['doctor_id', 'overview', 'health_plan_id', 'schedule_id', 'protocol_id'])
+        );
+
+        $appointment->evolutions()->createMany($request->input('evolutions'));
+        $appointment->objectives()->attach(
+            $this->computeObjectivesAttachStatement($request->input('objectives'))
+        );
+
+        return $appointment;
     }
 
     public function destroy($id)
     {
         return response()->json(Appointment::findOrFail($id)->delete(), 204);
+    }
+
+    protected function computeObjectivesAttachStatement($objectives)
+    {
+        $attach  = [];
+        foreach ($objectives as $objective) {
+            $attach[$objective['objective_id']] = [
+                'therapy_id' => $objective['therapy_id']
+            ];
+        }
+        return $attach;
     }
 }
