@@ -93,6 +93,7 @@ class ApiController extends Controller
         $expiration = JWTAuth::decode($objectToken->getToken())->get('exp');
 
         return response()->json([
+            'user' => $this->guard()->user(),
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration
