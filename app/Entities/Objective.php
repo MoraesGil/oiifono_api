@@ -10,7 +10,7 @@ use App\Entities\Appointment;
 
 class Objective extends Model
 {
-    protected $fillable = ['repeat', 'minutes', 'description'];
+    protected $fillable = ['repeat', 'minutes', 'description', 'pathology_id', 'strategy_id', 'therapy_id'];
     public $timestamps = false;
 
     public function therapy()

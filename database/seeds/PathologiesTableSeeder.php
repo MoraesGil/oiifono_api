@@ -4,7 +4,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Entities\Pathology;
-use League\Flysystem\File;
+use Illuminate\Support\Facades\File;
 
 class PathologiesTableSeeder extends Seeder
 {
