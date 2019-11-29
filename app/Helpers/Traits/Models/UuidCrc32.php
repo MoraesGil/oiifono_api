@@ -19,8 +19,8 @@ trait UuidCrc32
                 BatmanBelt::modelToValues($model, self::UUID_FIELDS)
             );
 
-            if ($model->{$model->primaryKey} == 0 || null){
-                throw new Exception("unable to generate crc32, check your model data", 1);
+            if ($model->{$model->primaryKey} === null){
+                throw new \Exception("Unable to generate crc32, check your model data", 1);
             }
         });
     }
