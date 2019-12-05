@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use App\Entities\Appointment;
 use App\Entities\Hospitalization;
 use App\Http\Requests\AppointmentRequest;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
     public function store(AppointmentRequest $request)
     {
-        $hospitalizaion = Hospitalization::activeHospitalization($request->input('person_id'));
+        $appointment = DB::transaction(function () use ($request) {
+            $hospitalizaion = Hospitalization::activeHospitalization($request->input('person_id'));
 
-        $appointment = $hospitalizaion->appointments()->create(
-            $request->only(['doctor_id', 'overview', 'health_plan_id', 'schedule_id', 'protocol_id'])
-        );
+            $appointment = $hospitalizaion->appointments()->create(
+                $request->only(['doctor_id', 'overview', 'health_plan_id', 'schedule_id', 'protocol_id'])
+            );
 
-        $appointment->evolutions()->createMany($request->input('evolutions'));
-        $appointment->objectives()->attach(
-            $this->computeObjectivesAttachStatement($request->input('objectives'))
-        );
+            $appointment->evolutions()->createMany($request->input('evolutions'));
+            $appointment->objectives()->attach(
+                $this->computeObjectivesAttachStatement($request->input('objectives'))
+            );
+
+            return $appointment;
+        });
 
         return $appointment;
     }

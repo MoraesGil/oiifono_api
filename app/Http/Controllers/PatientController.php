@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Entities\Person;
 use App\Http\Requests\PatientRequest;
+use App\Http\Resources\Patient;
+use App\Http\Resources\PatientCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +19,10 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
-        return response()->json(Person::patients()->with('individual')->paginate($request->get("limit") ?: 15), 200);
+        return response()->json(
+            new PatientCollection(Person::patients()->with('individual')->paginate($request->get("limit") ?: 15)),
+            200
+        );
     }
 
     public function store(PatientRequest $request)
@@ -33,12 +38,14 @@ class PatientController extends Controller
 
     public function show($id)
     {
-        return Person::with('individual')->findOrFail($id);
+        return response()->json(
+            new Patient(Person::with(['individual', 'parent', 'addresses', 'contacts'])->findOrFail($id))
+        );
     }
 
     public function update(PatientRequest $request, $id)
     {
-        $pes = DB::transaction(function () use ($request,$id) {
+        $pes = DB::transaction(function () use ($request, $id) {
             $pes =  Person::findOrFail($id)->update($request->all());
             $pes->individual = $pes->individual()->update($request->all());
             return $pes;

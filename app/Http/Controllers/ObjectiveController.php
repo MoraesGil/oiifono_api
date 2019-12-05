@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class ObjectiveController extends Controller
 {
-
-    public function index(Request $request)
-    {
-        return dd($request->getMethod());
-    }
-
     public function store(ObjectiveRequest $request)
     {
         $strategy = Strategy::updateOrCreate(['label' => $request->input('strategy')]);

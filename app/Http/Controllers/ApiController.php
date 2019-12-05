@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterAuthRequest;
 use App\Entities\Person;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,8 @@ class ApiController extends Controller
 {
     public $loginAfterSignUp = true;
 
-    public function __construct($loginAfterSignUp = true){
+    public function __construct($loginAfterSignUp = true)
+    {
         $this->loginAfterSignUp = $loginAfterSignUp;
     }
 
@@ -23,11 +25,11 @@ class ApiController extends Controller
 
         $user = DB::transaction(function () use ($request) {
             return  Person::create($request->all())
-            ->user()
-            ->create([
-                'email' => $request->get('email'),
-                'password' => Hash::make($request->get('password'))
-            ]);
+                ->user()
+                ->create([
+                    'email' => $request->get('email'),
+                    'password' => Hash::make($request->get('password'))
+                ]);
         });
 
         if ($this->loginAfterSignUp) {
@@ -93,7 +95,7 @@ class ApiController extends Controller
         $expiration = JWTAuth::decode($objectToken->getToken())->get('exp');
 
         return response()->json([
-            'user' => $this->guard()->user(),
+            'user' => new UserResource($this->guard()->user()),
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration

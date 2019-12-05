@@ -9,12 +9,16 @@ class ContactController extends Controller
 {
     public function index(ContactRequest $request)
     {
-        return response()->json(Contact::paginate($request->get("limit")?:15), 200);
+        return response()->json(Contact::paginate($request->get("limit") ?: 15), 200);
     }
 
     public function store(ContactRequest $request)
     {
-        return response()->json(Contact::create($request->all()), 201);
+        $request->request->add([
+            'type' => strpos($request->input('description'), '@') === false ? 1 : 0
+        ]);
+
+        return response()->json(Contact::create($request->request->all()), 201);
     }
 
     public function show($id)

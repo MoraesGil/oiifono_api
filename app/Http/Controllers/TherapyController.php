@@ -8,22 +8,39 @@ use App\Entities\Pathology;
 use App\Entities\Strategy;
 use App\Entities\Therapy;
 use App\Http\Requests\TherapyRequest;
-use Illuminate\Http\Request;
+use App\Http\Resources\TherapyResource;
+use Illuminate\Support\Facades\DB;
 
 class TherapyController extends Controller
 {
     public function store(TherapyRequest $request)
     {
-        $hospitalization = Hospitalization::activeHospitalization($request->input('person_id'));
-        
-        $therapy = $hospitalization->therapies()
-            ->create($request->only(['doctor_id', 'description']));
+        $therapy = DB::transaction(function () use ($request) {
+            $hospitalization = Hospitalization::activeHospitalization($request->input('person_id'));
 
-        $objectives = $this->createObjectives($request->input('objectives'));
+            $therapy = $hospitalization->therapies()
+                ->create($request->only(['doctor_id', 'description', 'times_week', 'max_minutes']));
 
-        $therapy->objectives()->saveMany($objectives);
+            $therapy->objectives()->saveMany(
+                $this->createObjectives($request->input('objectives'))
+            );
+
+            return $therapy;
+        });
 
         return $therapy;
+    }
+
+    public function show($id)
+    {
+        return new TherapyResource(
+            Therapy::query()->with([
+                'objectives',
+                'objectives.strategy',
+                'objectives.pathology',
+                'objectives.appointments'
+            ])->findOrFail($id)
+        );
     }
 
     protected function createObjectives($objetives)
