@@ -10,12 +10,23 @@ use App\Helpers\BatmanBelt;
 class Individual extends Model
 {
     protected $primaryKey = "person_id";
-    protected $fillable = ["birth_date", "cpf", "rg", "sex", "disabilities"];
+    
+    protected $fillable = ["birth_date", "cpf", "rg", "gender", "disabilities"];
+    
+    protected $dates = ['birthdate'];
+
     public $timestamps = false;
+
+
 
     public function person()
     {
         return $this->belongsTo(Person::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'person_id');
     }
 
     public function hospitalizations()
@@ -25,7 +36,6 @@ class Individual extends Model
 
     public function hospitalization()
     {
-        return $this->hospitalizations()->whereNull('discharge')->first();
+        return $this->hospitalizations()->whereNull('discharged')->first();
     }
-
 }

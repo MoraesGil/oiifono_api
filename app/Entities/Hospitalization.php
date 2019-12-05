@@ -21,6 +21,10 @@ class Hospitalization extends Model
         'discharged_doctor_id'
     ];
 
+    protected $dates = [
+        'discharged'
+    ];
+
     public $timestamps = false;
 
     /**

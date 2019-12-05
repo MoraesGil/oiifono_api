@@ -13,6 +13,11 @@ class Objective extends Model
     protected $fillable = ['repeat', 'minutes', 'description', 'pathology_id', 'strategy_id', 'therapy_id'];
     public $timestamps = false;
 
+    public function getRepetitionsRemainingAttribute()
+    {
+        return $this->repeat - $this->appointments->count();
+    }
+
     public function therapy()
     {
         return $this->belongsTo(Therapy::class);
@@ -20,15 +25,15 @@ class Objective extends Model
 
     public function strategy()
     {
-        return $this->hasOne(Strategy::class);
+        return $this->belongsTo(Strategy::class);
     }
 
     public function pathology()
     {
-        return $this->hasOne(Pathology::class);
+        return $this->belongsTo(Pathology::class);
     }
 
-    public function appointment()
+    public function appointments()
     {
         return $this->belongsToMany(Appointment::class, 'done_objectives');
     }

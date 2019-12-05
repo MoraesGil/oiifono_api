@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Person;
+
 class Doctor extends Model
 {
     protected $primaryKey = "person_id";
@@ -13,5 +14,10 @@ class Doctor extends Model
     public function person()
     {
         return $this->belongsTo(Person::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'doctor_id');
     }
 }

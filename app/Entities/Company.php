@@ -8,7 +8,7 @@ use App\Entities\HealthPlan;
 class Company extends Model
 {
     protected $primaryKey = "person_id";
-    protected $fillable = ["cnpj", "insc_estadual", "insc_municipal"];
+    protected $fillable = ["cnpj", "ie"];
     public $timestamps = false;
 
     public function person()
