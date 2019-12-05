@@ -11,16 +11,17 @@ use App\Entities\Doctor;
 use App\Entities\Availability;
 use App\Entities\Contact;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Person extends Model
 {
     use SoftDeletes;
     protected $fillable = ["name", "nickname"];
 
-    public function parent()
+    public function relatives()
     {
         return $this->belongsToMany(Person::class, 'relations', 'person_id', 'parent_id')
             ->withTimestamps()
-            ->withPivot('order', 'kinship');
+            ->withPivot('order', 'kinship', 'contact');
     }
 
     public function individual()
@@ -48,14 +49,9 @@ class Person extends Model
         return $this->hasMany(Contact::class);
     }
 
-    public function availability()
+    public function availabilities()
     {
         return $this->hasMany(Availability::class, 'person_id', 'id');
-    }
-
-    public function schedules()
-    {
-        return $this->belongsToMany(Schedule::class, 'people_schedule')->withPivot(['host', 'confirmed']);
     }
 
     public function user()
@@ -63,7 +59,10 @@ class Person extends Model
         return $this->hasOne(User::class);
     }
 
-    public static function patients(){
-        return SELF::whereHas('individual');
+    public static function patients()
+    {
+        return self::query()
+            ->whereHas('individual')
+            ->doesntHave('doctor');
     }
 }
