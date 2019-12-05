@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Schedule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactRequest extends FormRequest
+class AbsenceScheduleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,8 @@ class ContactRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'person_id' => "required|exists:people,id",
-            'main' => 'required|boolean',
-            'description' => 'required|string'
+        return [
+            'absence_by' => 'present|nullable|string'
         ];
-
-        if (strpos($this->input('contact', ''), '@') !== false) {
-            $rules['description'] .= '|email';
-        }
-
-        return $rules;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactRequest extends FormRequest
+class RelationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,12 @@ class ContactRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'person_id' => "required|exists:people,id",
-            'main' => 'required|boolean',
-            'description' => 'required|string'
+        return [
+            'name' => 'required|string|max:200',
+            'order' => 'nullable|numeric',
+            'kinship' => 'nullable|numeric',
+            'contact' => 'required|string|max:15',
+            'person_id' => 'required|exists:people,id'
         ];
-
-        if (strpos($this->input('contact', ''), '@') !== false) {
-            $rules['description'] .= '|email';
-        }
-
-        return $rules;
     }
 }

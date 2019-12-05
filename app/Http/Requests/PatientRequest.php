@@ -30,7 +30,7 @@ class PatientRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:200',
-            'sex' => ['required',Rule::in(self::GENDERS)],
+            'gender' => ['required',Rule::in(self::GENDERS)],
             'birthdate' => 'required|date|date_format:d-m-Y|before:tomorrow',
             'disabilities','nullable|string|max:100',
             'cpf' => 'nullable|cpf|formato_cpf|unique:individuals',

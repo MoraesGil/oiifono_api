@@ -28,6 +28,8 @@ class TherapyRequest extends FormRequest
                 return [
                     'person_id' => 'required|numeric|exists:individuals',
                     'doctor_id' => 'required|numeric|exists:doctors,person_id',
+                    'times_week' => 'required|numeric|min:1|max:7',
+                    'max_minutes' => 'required|min:0|max:0',
                     'description' => 'required|string',
                     'objectives' => 'sometimes|array',
                     'objectives.*.pathology' => 'required|numeric|exists:pathologies,id',
