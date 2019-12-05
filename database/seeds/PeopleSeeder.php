@@ -44,7 +44,7 @@ class PeopleSeeder extends Seeder
                 DB::transaction(function () use ($doctor) {
                     $individual = factory(Individual::class)->make();
                     $genders = ['m' => 'male', 'f' => 'female'];
-                    $person = factory(Person::class)->state($genders[$individual->sex])->create();
+                    $person = factory(Person::class)->state($genders[$individual->gender])->create();
                     $person->individual()->save($individual);
 
                     if ($this->faker->boolean(20))
@@ -52,7 +52,7 @@ class PeopleSeeder extends Seeder
 
                     for ($i = 0; $i <= 6; $i++) {
                         $availabilities = factory(Availability::class, 10)->make(['week_day' => $i]);
-                        $person->availability()->saveMany($availabilities);
+                        $person->availabilities()->saveMany($availabilities);
                     }
 
                     $person->doctor()->save($doctor);
@@ -80,7 +80,7 @@ class PeopleSeeder extends Seeder
             ->each(function (Individual $individual) {
                 DB::transaction(function () use ($individual) {
                     $genders = ['m' => 'male', 'f' => 'female'];
-                    $person = factory(Person::class)->state($genders[$individual->sex])->create();
+                    $person = factory(Person::class)->state($genders[$individual->gender])->create();
                     $person->individual()->save($individual);
 
                     //make a hospitalizations

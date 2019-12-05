@@ -2,16 +2,18 @@
 
 use Faker\Generator as Faker;
 use App\Entities\Schedule;
+use Illuminate\Support\Carbon;
 
 $factory->define(Schedule::class, function (Faker $faker) {
+    $startAt = Carbon::today()->addDays($faker->numberBetween(0, 30))->setTime($faker->numberBetween(0, 22), 0);
+    $endAt = $startAt->copy()->addHour(1);
 
     return [
-        'label'=> $faker->text(50),
-        'type'=>null,
-        'start_at'=>null,
-        'end_at'=>null,
-        'therapy_id'=>null,
-        'parent_id'=>null,
-        'absence_by'=>$this->faker->boolean(90) ? null : $faker->text(20)
+        'label' => $faker->text(45),
+        'type' => 1,
+        'start_at' => $startAt->toDateTimeString(),
+        'end_at' => $endAt->toDateTimeString(),
+        'confirmed' => $this->faker->boolean(),
+        'absence_by' => $this->faker->boolean(90) ? null : $faker->text(20)
     ];
 });

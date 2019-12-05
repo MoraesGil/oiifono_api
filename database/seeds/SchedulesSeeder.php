@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder; ;
+use App\Entities\Person;
+use App\Entities\Schedule;
+use Illuminate\Database\Seeder;;
 
 class SchedulesSeeder extends Seeder
 {
@@ -11,6 +13,20 @@ class SchedulesSeeder extends Seeder
      */
     public function run()
     {
+        $numSchedules = 100;
+        $doctors = Person::query()->has('doctor')->get();
+        $patients = Person::query()->has('individual')->get();
 
+
+        for ($i = 0; $i < $numSchedules; $i++) {
+            $doctor = $doctors->random();
+            $patient = $patients->random();
+
+            $schedule = factory(Schedule::class)->make();
+
+            $schedule->doctor_id = $doctor->id;
+            $schedule->person_id = $patient->id;
+            $schedule->save();
+        }
     }
 }

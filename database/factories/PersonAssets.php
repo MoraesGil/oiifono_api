@@ -22,8 +22,8 @@ use Carbon\Carbon;
 $factory->define(Address::class, function (Faker $faker) {
     return [
         'city_id' => City::inRandomOrder()->limit(1)->first(),
-        'address' => $faker->streetName.", ".$faker->numberBetween(1, 1000),
-        'district' => $faker->word(4,true),
+        'address' => $faker->streetName . ", " . $faker->numberBetween(1, 1000),
+        'district' => $faker->word(4, true),
         'zipcode' => $faker->postcode,
         'complements' => $faker->text(20)
     ];
@@ -49,8 +49,8 @@ $factory->define(Availability::class, function (Faker $faker) {
     $max = 20;
     $min = 7;
 
-    $start =  Carbon::now()->startOfDay()->addHour($faker->numberBetween($min, $max))->addMinutes($faker->randomElement([0,15,30,45]));
-    $end = $start->addHour($faker->numberBetween(7, 20))->addMinutes($faker->randomElement([0,15,30,45]));
+    $start =  Carbon::now()->startOfDay()->addHour($faker->numberBetween($min, $max - 1))->addMinutes($faker->randomElement([0, 15, 30, 45]));
+    $end = Carbon::now()->startOfDay()->addHour($faker->numberBetween($start->hour + 1, $max))->addMinutes($faker->randomElement([0, 15, 30, 45]));
 
     return [
         'week_day' => $faker->randomNumber() % 7,
@@ -58,4 +58,3 @@ $factory->define(Availability::class, function (Faker $faker) {
         'end_at' => $end->toTimeString()
     ];
 });
-

@@ -45,7 +45,7 @@ $factory->define(Individual::class, function (Faker $faker) {
 
   return [
     'birthdate' => Carbon::createFromTimestamp($faker->dateTimeBetween('-80 years', '-1 year')->getTimestamp()),
-    'sex' => $faker->boolean() ? 'm' : 'f',
+    'gender' => $faker->boolean() ? 'm' : 'f',
     'cpf' => $faker->numerify('###########'),
     'rg' => $faker->numerify('#########'),
     'disabilities' => $faker->boolean(40) ? $faker->randomElement($disabilities) : null
