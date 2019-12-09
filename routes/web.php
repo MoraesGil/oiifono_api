@@ -11,8 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Entities\Evolution;
+use App\Services\ScheduleService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+
+Route::prefix('report')->namespace('Reports')->group(function () {
+    Route::get('schedule/{doctor_id}', 'ScheduleReportController@index');
+    Route::get('appointment/{person_id}', 'PatientAppointmentsReportController@index');
+    Route::get('hospitalized', 'HospitalizedReportController@index');
 });
+
+
 
 // Auth::routes();
