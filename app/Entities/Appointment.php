@@ -24,8 +24,6 @@ class Appointment extends Model
         'protocol_id'
     ];
 
-    public $timestamps = false;
-
     public function hospitalization()
     {
         return $this->belongsTo(Hospitalization::class);

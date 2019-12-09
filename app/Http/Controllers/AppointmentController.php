@@ -38,7 +38,7 @@ class AppointmentController extends Controller
     {
         $attach  = [];
         foreach ($objectives as $objective) {
-            $attach[$objective['objective_id']] = [
+            $attach[$objective['id']] = [
                 'therapy_id' => $objective['therapy_id']
             ];
         }

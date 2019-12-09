@@ -22,10 +22,8 @@ class Hospitalization extends Model
     ];
 
     protected $dates = [
-        'discharged'
+        'discharged',
     ];
-
-    public $timestamps = false;
 
     /**
      * Find a person's active Hospitalization. Create one if it doesn't exists.
@@ -55,7 +53,7 @@ class Hospitalization extends Model
 
     public function healthPlan()
     {
-        return $this->belongsTo(HealthPlan::class, 'id', 'health_plan_id');
+        return $this->belongsTo(HealthPlan::class, 'health_plan_id');
     }
 
     public function appointments()
