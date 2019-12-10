@@ -34,9 +34,9 @@ class TherapyBaseSeeder extends Seeder
             }
         }
 
-        if(Pathology::count() < 500)
-        factory(Pathology::class,500)->create();
-        if(Strategy::count() < 500)
-        factory(Strategy::class,500)->create();
+        // if(Pathology::count() < 500)
+        // factory(Pathology::class,500)->create();
+        if(Strategy::count() < 30)
+        factory(Strategy::class,30)->create();
     }
 }

@@ -9,8 +9,6 @@ $factory->define(Schedule::class, function (Faker $faker) {
     $endAt = $startAt->copy()->addHour(1);
 
     return [
-        'label' => $faker->text(45),
-        'type' => 1,
         'start_at' => $startAt->toDateTimeString(),
         'end_at' => $endAt->toDateTimeString(),
         'confirmed' => $this->faker->boolean(),

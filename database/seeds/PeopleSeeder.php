@@ -12,6 +12,8 @@ use App\Entities\Person;
 use App\Entities\Hospitalization;
 use App\Entities\HealthPlan;
 use App\Entities\Therapy;
+use App\Entities\User;
+
 
 class PeopleSeeder extends Seeder
 {
@@ -26,9 +28,9 @@ class PeopleSeeder extends Seeder
     {
         $this->faker = Faker::create();
 
-        $amountDoctors = 5;
+        $amountDoctors = 1;
         $amountHealthPlan = 10;
-        $amountPatients = $amountDoctors*10;
+        $amountPatients = $amountDoctors*50;
 
         $this->generateDoctors($amountDoctors);
         $this->generateHealthPlan($amountHealthPlan);
@@ -56,6 +58,10 @@ class PeopleSeeder extends Seeder
                     }
 
                     $person->doctor()->save($doctor);
+
+                    $user = factory(User::class)->make();
+                    $user->person_id = $person->id;
+                    $user->save();
                 });
             });
     }
