@@ -66,7 +66,7 @@ $factory->define(Company::class, function (Faker $faker) {
 
 $factory->define(Doctor::class, function (Faker $faker) {
   return [
-    'register' => $faker->numerify('#####')
+    'register' => $faker->numerify('######')
   ];
 });
 

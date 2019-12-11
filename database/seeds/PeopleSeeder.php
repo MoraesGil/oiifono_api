@@ -30,11 +30,13 @@ class PeopleSeeder extends Seeder
 
         $amountDoctors = 1;
         $amountHealthPlan = 10;
-        $amountPatients = $amountDoctors*50;
+        $amountPatients = $amountDoctors * 50;
 
         $this->generateDoctors($amountDoctors);
         $this->generateHealthPlan($amountHealthPlan);
         $this->generatePatients($amountPatients);
+
+        $this->generateDoctorAdmin();
     }
 
     protected function generateDoctors($amount)
@@ -110,5 +112,44 @@ class PeopleSeeder extends Seeder
                     }
                 });
             });
+    }
+
+    protected function generateDoctorAdmin()
+    {
+        if(!User::whereEmail('teste@teste.com')->first())
+        DB::transaction(function () {
+            $doctor = factory(App\Entities\Doctor::class)->make();
+            $individual = factory(Individual::class)->make();
+            $genders = ['m' => 'male', 'f' => 'female'];
+            $person = factory(Person::class)->state($genders[$individual->gender])->create();
+            $person->individual()->save($individual);
+
+            if ($this->faker->boolean(20))
+                $person->company()->save(factory(Company::class)->make());
+            $person->doctor()->save($doctor);
+
+            for ($i = 1; $i <= 6; $i++) {
+                $availabilities = [];
+                $availabilities[] = factory(App\Entities\Availability::class)->make([
+                    'week_day' => 1,
+                    'start_at' => "07:00",
+                    'end_at' =>  "12:00"
+                ]);
+                $availabilities[] = factory(App\Entities\Availability::class)->make([
+                    'week_day' => 1,
+                    'start_at' => "14:00",
+                    'end_at' =>  "20:00"
+                ]);
+
+                $person->availabilities()->saveMany($availabilities);
+            }
+            // $user = factory(User::class)->make();
+            $user = factory(User::class)->make([
+                'email' => "teste@teste.com",
+                'password' => Hash::make('teste321')
+            ]);
+            $user->person_id = $person->id;
+            $user->save();
+        });
     }
 }
