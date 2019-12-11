@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Person;
 use App\Http\Requests\PatientRequest;
+use App\Http\Requests\TypeAheadRequest;
 use App\Http\Resources\Patient;
 use App\Http\Resources\PatientCollection;
 use Illuminate\Http\Request;
