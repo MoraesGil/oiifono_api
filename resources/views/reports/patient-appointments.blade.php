@@ -1,5 +1,5 @@
 @extends('reports.layout')
-@section('title', 'Relatório Atendimentos')
+@section('title', 'Rel. Atendimentos')
 @section('content')
 <div class="pt-5">
     <h2 class="text-center">Relatório de Atendimentos</h2>
