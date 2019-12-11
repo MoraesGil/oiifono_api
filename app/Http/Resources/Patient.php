@@ -26,7 +26,7 @@ class Patient extends JsonResource
             'name' => $this->name,
             'nickname' => $this->nickname,
             'picture' => $this->picture,
-            'relations' => $this->whenLoaded('parent'),
+            'relations' => $this->whenLoaded('relatives'),
             'addresses' => $this->whenLoaded('addresses'),
             'contacts' => $this->whenLoaded('contacts')
         ];

@@ -78,11 +78,4 @@ class ProtocolController extends Controller
                 $this->createQuestionOptions($optionData['options'], $protocolQuestion, $option);
         }
     }
-
-    protected function getSuboptions(Option $option)
-    {
-        foreach ($option->options as $option) {
-            $this->getSuboptions($option);
-        }
-    }
 }

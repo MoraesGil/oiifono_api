@@ -40,7 +40,7 @@ class PatientController extends Controller
     public function show($id)
     {
         return response()->json(
-            new Patient(Person::with(['individual', 'parent', 'addresses', 'contacts'])->findOrFail($id))
+            new Patient(Person::with(['individual', 'relatives', 'addresses', 'contacts'])->findOrFail($id))
         );
     }
 

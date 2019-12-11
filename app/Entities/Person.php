@@ -20,7 +20,6 @@ class Person extends Model
     public function relatives()
     {
         return $this->belongsToMany(Person::class, 'relations', 'person_id', 'parent_id')
-            ->withTimestamps()
             ->withPivot('order', 'kinship', 'contact');
     }
 
