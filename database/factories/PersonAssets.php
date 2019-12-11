@@ -21,7 +21,7 @@ use Carbon\Carbon;
 
 $factory->define(Address::class, function (Faker $faker) {
     return [
-        'city_id' => City::inRandomOrder()->limit(1)->first(),
+        'city_id' => City::inRandomOrder()->limit(1)->first()->id,
         'address' => $faker->streetName . ", " . $faker->numberBetween(1, 1000),
         'district' => $faker->word(4, true),
         'zipcode' => $faker->postcode,

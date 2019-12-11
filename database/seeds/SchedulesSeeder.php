@@ -19,7 +19,7 @@ class SchedulesSeeder extends Seeder
             for ($i = 0; $i < $numSchedules; $i++) {
                 $schedule = factory(Schedule::class)->make();
                 $schedule->doctor_id = $doctor->id;
-                $schedule->person_id = Person::patients()->inRandomOrder()->limit(1)->first();
+                $schedule->person_id = Person::patients()->inRandomOrder()->limit(1)->first()->id;
                 $schedule->save();
             }
         }
