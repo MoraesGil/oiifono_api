@@ -78,7 +78,7 @@ class ScheduleController extends Controller
             });
     }
 
-    public function createSchedules(CreateScheduleRequest $request, ScheduleService $scheduler, $therapyId)
+    public function generate(CreateScheduleRequest $request, ScheduleService $scheduler, $therapyId)
     {
         return $scheduler->schedule(
             Therapy::findOrFail($therapyId),

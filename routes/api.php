@@ -28,11 +28,11 @@ Route::group([], function () {
     Route::resource('objective', 'ObjectiveController', ['except' => ['create', 'edit']]);
     Route::resource('appointment', 'AppointmentController', ['except' => ['create', 'edit']]);
 
-    Route::resource('schedule', 'ScheduleController', ['except' => ['create', 'edit']]);
-    Route::patch('schedule/{id}/confirm', 'ScheduleController@confirm');
-    Route::patch('schedule/{id}/absence', 'ScheduleController@absence');
-    Route::get('schedule/best-schedules/{therapyId}', 'ScheduleController@bestSchedules');
-    Route::post('schedule/create-schedules/{therapyId}', 'ScheduleController@createSchedules');
+    Route::resource('schedules', 'ScheduleController', ['except' => ['create', 'edit']]);
+    Route::patch('schedules/{id}/confirm', 'ScheduleController@confirm');
+    Route::patch('schedules/{id}/absence', 'ScheduleController@absence');
+    Route::get('schedules/generator/{therapyId}/best-schedules', 'ScheduleController@bestSchedules');
+    Route::post('schedules/generator/{therapyId}', 'ScheduleController@generate');
 
     Route::get('appointment/{appointment}/evolution/', 'EvolutionController@index');
 });
