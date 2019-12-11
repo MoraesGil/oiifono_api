@@ -7,11 +7,16 @@ use App\Entities\User;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserPasswordRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function updatePassword(UserPasswordRequest $request)
     {
+
+        if(!Hash::check($request->get("password_old"), Auth::user()->password))
+        return $this->checkOldCredentials();
+
         return response()->json(User::findOrFail(Auth::user()->id)->update([
             'password' => Hash::make($request->get('password'))
         ]), 200);
@@ -23,7 +28,7 @@ class UserController extends Controller
             ->with(['doctor', 'individual', 'company'])
             ->findOrFail(Auth::user()->person_id);
 
-        $person = \DB::transaction(function () use ($person, $request) {
+        $person = DB::transaction(function () use ($person, $request) {
             $person->update($request->all());
 
             if ($person->doctor) {
@@ -39,4 +44,13 @@ class UserController extends Controller
 
         return $person;
     }
+
+    protected function checkOldCredentials()
+        {
+            return [
+                'errors' => [
+                    'password_old' => 'Senha anterior não confere.'
+                ]
+            ];
+        }
 }

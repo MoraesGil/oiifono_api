@@ -14,19 +14,16 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('pathologies', 'PathologyController@typeahead');
     Route::get('strategies', 'StrategyController@typeahead');
 
-    Route::resource('/person', 'PersonController', ['except' => ['create', 'edit', 'show']]);
-    Route::resource('/relation', 'RelationController', ['except' => ['create', 'edit']]);
-    Route::resource('/address', 'AddressController', ['except' => ['create', 'edit']]);
-    Route::resource('/contact', 'ContactController', ['except' => ['create', 'edit']]);
-    Route::resource('/patient', 'PatientController', ['except' => ['create', 'edit']]);
+    Route::resource('/patients', 'PatientController', ['except' => ['create', 'edit']]);
+    Route::resource('/relations', 'RelationController', ['except' => ['create', 'edit']]);
+    Route::resource('/addresses', 'AddressController', ['except' => ['create', 'edit']]);
+    Route::resource('/contacts', 'ContactController', ['except' => ['create', 'edit']]);
+    Route::resource('/availabilities', 'AvailabilityController', ['only' => ['index', 'store', 'destroy']]);
 
-    Route::get('/person/{id}/availability', 'AvailabilityController@personsAvailabilities');
-    Route::resource('/availability', 'AvailabilityController', ['except' => ['create', 'edit', 'index']]);
-
-    Route::resource('therapy', 'TherapyController', ['except' => ['create', 'edit']]);
-    Route::resource('protocol', 'ProtocolController', ['except' => ['create', 'edit']]);
-    Route::resource('objective', 'ObjectiveController', ['except' => ['create', 'edit']]);
-    Route::resource('appointment', 'AppointmentController', ['except' => ['create', 'edit']]);
+    Route::resource('therapies', 'TherapyController', ['except' => ['create', 'edit']]);
+    Route::resource('protocols', 'ProtocolController', ['except' => ['create', 'edit']]);
+    Route::resource('objectives', 'ObjectiveController', ['except' => ['create', 'edit']]);
+    Route::resource('appointments', 'AppointmentController', ['except' => ['create', 'edit']]);
 
     Route::resource('schedules', 'ScheduleController', ['except' => ['create', 'edit']]);
     Route::patch('schedules/{id}/confirm', 'ScheduleController@confirm');

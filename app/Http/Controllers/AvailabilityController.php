@@ -4,27 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Entities\Availability;
 use App\Http\Requests\AvailabilityRequest;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AvailabilityController extends Controller
 {
-    public function personsAvailabilities($id)
+    public function index()
     {
-        return response()->json(Availability::query()->where('person_id', $id)->get(), 200);
+        return response()->json(Auth::user()->person->availabilities, 200);
     }
 
     public function store(AvailabilityRequest $request)
     {
-        return Availability::query()->create($request->all());
+        return response()->json(Auth::user()->person->availabilities()->create($request->all()), 201);
     }
 
-    public function update(AvailabilityRequest $request, $id)
+    public function destroy($id)
     {
-        return Availability::query()->where('id', $id)->update($request->all());
-    }
-
-    public function delete($id)
-    {
-        return Availability::query()->where('id', $id)->delete();
+        return response()->json(Availability::findOrFail($id)->delete(), 204);
     }
 }
