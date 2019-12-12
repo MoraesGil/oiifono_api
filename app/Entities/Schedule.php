@@ -21,6 +21,13 @@ class Schedule extends Model
         'end_at' => 'datetime:H:i',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+
     public function patient()
     {
         return $this->belongsTo(Individual::class, 'person_id');

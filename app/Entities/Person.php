@@ -17,6 +17,12 @@ class Person extends Model
     use SoftDeletes;
     protected $fillable = ["name", "nickname"];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     public function relatives()
     {
         return $this->belongsToMany(Person::class, 'relations', 'person_id', 'parent_id')
