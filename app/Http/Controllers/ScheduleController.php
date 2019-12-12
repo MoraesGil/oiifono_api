@@ -6,7 +6,6 @@ use App\Entities\Schedule;
 use App\Entities\Therapy;
 use App\Http\Requests\Schedule\AbsenceScheduleRequest;
 use App\Http\Requests\Schedule\UpdateScheduleRequest;
-use App\Http\Resources\ScheduleCollection;
 use App\Services\ScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -19,16 +18,13 @@ class ScheduleController extends Controller
 {
     public function index(Request $request)
     {
+        $date  = $request->get("date") ?: "";
+        $fromDate = (new Carbon($date))->addDays('-20 days');
+        $toDate =  (new Carbon($date))->addDays('20 days');
 
-        $fromDate = new Carbon($request->query('fromDate', '-15 days'));
-        $toDate =  new Carbon($request->query('toDate', '60 days'));
-
-        $doctorId = $request->query('doctor_id', null);
-
-        if ($doctorId == null) $doctorId = $request->user()->person_id;
-
+        $doctorId = $request->get('doctor_id', $request->user()->person_id);
         $schedules = Schedule::getSchedulesFromInterval($doctorId, $fromDate, $toDate);
-        return new ScheduleCollection($schedules);
+        return $schedules;
     }
 
     public function update(UpdateScheduleRequest $request, ScheduleService $scheduler, $id)
@@ -91,7 +87,7 @@ class ScheduleController extends Controller
     {
         return [
             'errors' => [
-                'start_at' => 'O periodo selecionado gera conflito com outro agendamento!'
+                'start_at' => 'Horário Indisponível!'
             ]
         ];
     }

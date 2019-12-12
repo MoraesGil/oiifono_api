@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::resource('relations', 'RelationController', ['only' => ['store','destroy']]);
 
     // therapy
-    Route::resource('therapies', 'TherapyController', ['except' => ['create', 'edit']]);
+    Route::resource('therapies', 'TherapyController', ['only' => ['store', 'show']]);
     Route::resource('objectives', 'ObjectiveController', ['except' => ['create', 'edit']]);
     Route::get('typeahead/pathologies', 'PathologyController@typeahead')->name('typeahead.pathologies');
     Route::get('typeahead/strategies', 'StrategyController@typeahead')->name('typeahead.strategies');

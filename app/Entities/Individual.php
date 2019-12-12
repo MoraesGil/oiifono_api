@@ -10,14 +10,16 @@ use App\Helpers\BatmanBelt;
 class Individual extends Model
 {
     protected $primaryKey = "person_id";
-    
+
     protected $fillable = ["birth_date", "cpf", "rg", "gender", "disabilities"];
-    
+
     protected $dates = ['birthdate'];
 
     public $timestamps = false;
 
-
+    protected $casts = [
+        'birthdate' => 'datetime:Y-m-d',
+    ];
 
     public function person()
     {

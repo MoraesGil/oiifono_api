@@ -16,6 +16,11 @@ class Schedule extends Model
         'end_at'
     ];
 
+    protected $casts = [
+        'start_at' => 'datetime:H:i',
+        'end_at' => 'datetime:H:i',
+    ];
+
     public function patient()
     {
         return $this->belongsTo(Individual::class, 'person_id');
@@ -52,7 +57,8 @@ class Schedule extends Model
             ->where('start_at', '>=', $from->startOfDay())
             ->where('end_at', '<=', $to->endOfDay())
             ->where('doctor_id', $doctorId)
-            ->with(['patient', 'patient.person', 'reschedule'])
+            // ->with(['patient', 'patient.person', 'reschedule'])
+            ->with(['patient', 'patient.person'])
             ->get();
     }
 
