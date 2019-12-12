@@ -26,7 +26,8 @@ class TherapyResource extends JsonResource
         return array_merge(
             parent::toArray($request),
             [
-                'progress' => $therapyProgress / $this->objectives->count()
+                'progress' => $therapyProgress / $this->objectives->count(),
+                'objectives' => new ObjectiveCollection($this->objectives)
             ]
         );
     }

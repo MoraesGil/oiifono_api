@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Entities\Hospitalization;
 use App\Entities\Objective;
-use App\Entities\Pathology;
 use App\Entities\Strategy;
 use App\Entities\Therapy;
 use App\Http\Requests\TherapyRequest;
@@ -38,7 +37,7 @@ class TherapyController extends Controller
                 'objectives',
                 'objectives.strategy',
                 'objectives.pathology',
-                'objectives.appointments'
+                'objectives.appointments:id'
             ])->findOrFail($id)
         );
     }

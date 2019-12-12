@@ -3,10 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\AppointmentEvolution;
-use App\Rules\AppointmentObjective;
 use Illuminate\Foundation\Http\FormRequest;
-
-
 
 class AppointmentRequest extends FormRequest
 {
@@ -36,13 +33,13 @@ class AppointmentRequest extends FormRequest
                     'health_plan_id' => 'nullable|exists:health_plans,id',
                     'schedule_id' => 'nullable|exists:schedules,id',
                     'protocol_id' => 'nullable|exists:protocols,id',
-                    'evolutions' => 'required_unless:protocol_id,null|array',
+                    'evolutions' => 'array',
                     'evolutions.*.question_id' => 'required_unless:protocol_id,null',
                     'evolutions.*.option_id' => 'required_unless:protocol_id,null',
                     'evolutions.*.answer' => 'nullable|max:255',
                     'evolutions.*' => [new AppointmentEvolution($this->input('protocol_id'))],
                     'objectives' => 'array|distinct',
-                    'objectives.*.objective_id' => 'required|exists:objectives,id',
+                    'objectives.*.id' => 'required|exists:objectives,id',
                     'objectives.*.therapy_id' => 'required|exists:objectives',
                 ];
         }
