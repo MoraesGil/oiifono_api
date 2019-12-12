@@ -14,6 +14,10 @@ class Therapy extends Model
     use SoftDeletes;
     protected $fillable = ['hospitalization_id', 'max_minutes', 'times_week', 'doctor_id', 'description'];
 
+    protected $hidden = [
+        'updated_at', "deleted_at"
+    ];
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'person_id', 'doctor_id');

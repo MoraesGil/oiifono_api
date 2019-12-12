@@ -12,6 +12,12 @@ class Objective extends Model
 {
     protected $fillable = ['repeat', 'minutes', 'description', 'pathology_id', 'strategy_id', 'therapy_id'];
     public $timestamps = false;
+    protected $hidden = [
+        'therapy_id',
+        'pathology_id',
+        'strategy_id'
+    ];
+
 
     public function getRepetitionsRemainingAttribute()
     {

@@ -11,6 +11,10 @@ class Strategy extends Model
 
     use UuidCrc32;
 
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
+
     protected $fillable = ['label', 'description'];
     public $timestamps = false;
 

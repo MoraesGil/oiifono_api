@@ -11,6 +11,10 @@ class Pathology extends Model
     use UuidCrc32;
     const UUID_FIELDS = ['cid'];
 
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
+
     protected $fillable = ['cid','label', 'description'];
 
     public function actingArea()
