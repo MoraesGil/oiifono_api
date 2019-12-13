@@ -24,12 +24,18 @@ class ApiController extends Controller
     {
 
         $user = DB::transaction(function () use ($request) {
-            return  Person::create($request->all())
-                ->user()
+            $pes =
+            Person::create($request->all());
+
+            $pes->user()
                 ->create([
                     'email' => $request->get('email'),
                     'password' => Hash::make($request->get('password'))
                 ]);
+
+            $pes->doctor()->create($request->all());
+
+            return $pes;
         });
 
         if ($this->loginAfterSignUp) {
