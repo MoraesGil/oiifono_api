@@ -11,12 +11,18 @@ class Schedule extends Model
 {
     protected $fillable = ['start_at', 'end_at', 'therapy_id', 'parent_id', 'confirmed', 'person_id', 'doctor_id'];
 
+    protected $appends = [
+        'date'
+    ];
+
     protected $dates = [
+        'date',
         'start_at',
         'end_at'
     ];
 
     protected $casts = [
+        'date' => 'datetime:H:i',
         'start_at' => 'datetime:H:i',
         'end_at' => 'datetime:H:i',
     ];
@@ -27,6 +33,10 @@ class Schedule extends Model
         'deleted_at'
     ];
 
+
+    public function getDateAttribute(){
+        return $this->start_at->toDateString();
+    }
 
     public function patient()
     {
