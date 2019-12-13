@@ -51,13 +51,13 @@ class ScheduleController extends Controller
 
     public function confirm($id)
     {
-        return Schedule::query()->where('id', $id)->update(['confirmed' => true]);
+        return response()->json(Schedule::query()->where('id', $id)->update(['confirmed' => true]), 200);
     }
 
     public function absence(AbsenceScheduleRequest $request, $id)
     {
         $updateResult = Schedule::query()->where('id', $id)->update($request->only('absence_by'));
-        return response()->json($updateResult, 201);
+        return response()->json($updateResult, 200);
     }
 
     public function bestSchedules(Request $request, ScheduleService $scheduler, $therapyId)
