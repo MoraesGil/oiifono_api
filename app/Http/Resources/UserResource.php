@@ -21,19 +21,14 @@ class UserResource extends JsonResource
         ];
 
         if ($this->person) {
-            $user['person'] = [
+            $user = array_merge($user, [
                 'id' => $this->person->id,
                 'name' => $this->person->name,
                 'picture' => $this->person->picture,
-                'company'=>[
-                    'cnpj' => $this->person->company ? $this->person->company->cnpj : null,
-                    'ie' => $this->person->company ? $this->person->company->ie : null,
-                ],
-                'doctor'=>[
-                    'crfa' => $this->person->doctor ? $this->person->doctor->register : null,
-                ],
-                'availabilities' => $this->person->availabilities
-            ];
+                'cnpj' => $this->person->company ? $this->person->company->cnpj : null,
+                'ie' => $this->person->company ? $this->person->company->ie : null,
+                'register' => $this->person->doctor ? $this->person->doctor->register : null
+            ]);
         }
         return $user;
     }
