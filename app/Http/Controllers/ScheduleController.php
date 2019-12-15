@@ -47,7 +47,7 @@ class ScheduleController extends Controller
     {
         $schedule = $scheduler->storeSchedule(new Schedule($request->all()));
 
-        if ($schedule) return response()->json($schedule, 200);
+        if ($schedule) return response()->json($schedule, 201);
         return response()->json($this->createConflictedErrorMessage(), 422);
     }
 

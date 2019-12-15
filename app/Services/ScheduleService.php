@@ -35,7 +35,7 @@ class ScheduleService
 
     /**
      * Checks if exists a conflict with a schdule in the given timerange.
-     * 
+     *
      * @param Schedule $schedule The schedule which will be checked.
      * @param Carbon $startAt The start time of the timerange.
      * @param Carbon $endAt the end time of the timerange.
@@ -55,7 +55,7 @@ class ScheduleService
 
     /**
      * Creates the schedules needed to complete a therapy plan.
-     * 
+     *
      * @param Collection $daysOfWeek Collection with the new schedules weekday(key) and start time(value).
      */
     public function schedule(Therapy $therapy, Doctor $doctor, Collection $daysOfWeek)
@@ -129,7 +129,7 @@ class ScheduleService
     /**
      * Computes how many schedules are needed to complete a collection of objectives,
      * and how long they have (atleast) to be.
-     * 
+     *
      * @param Collection $objectives Collection of objectives to fulfill.
      * @param int $therapyMaxSessionLength Max length in minutes for a session.
      * @param Collection $patientSchedules Patient's Schedules.
@@ -177,7 +177,7 @@ class ScheduleService
                     $availability,
                     $futureSchedulesPerWeekday->get($availability->week_day, collect()),
                     $sessions,
-                    $sessionLength,
+                    $sessionLength
                 )->merge($bestSchedules->get($availability->week_day))
             );
         }
@@ -186,7 +186,7 @@ class ScheduleService
 
     /**
      * Computes the best time for a schedule start_at for a given availability.
-     * 
+     *
      * @param Availability $availability
      * @param Collection $schedules Doctor's and Patient's shedules.
      * @param int $sessions How many sessions to schedule.
@@ -218,7 +218,7 @@ class ScheduleService
 
     /**
      * Defines new schedules for a given doctor and patient.
-     * 
+     *
      * @param Collection $existingSchedules Doctor's and Patient's shedules.
      * @param Collection $daysOfWeek Collection with the new schedules weekday(key) and start time(value).
      * @param int $sessions How many sessions to schedule.
