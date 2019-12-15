@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::resource('relations', 'RelationController', ['only' => ['store','destroy']]);
 
     // therapy
+    Route::get('patients/{id}/active-therapy', 'PatientController@activeTherapy')->name('patients.activeTherapy');
     Route::resource('therapies', 'TherapyController', ['only' => ['store', 'show']]);
     Route::resource('objectives', 'ObjectiveController', ['except' => ['create', 'edit']]);
     Route::get('typeahead/pathologies', 'PathologyController@typeahead')->name('typeahead.pathologies');

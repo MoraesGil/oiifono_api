@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Person;
+use App\Entities\Therapy;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\TypeAheadRequest;
 use App\Http\Resources\Patient;
 use App\Http\Resources\PatientCollection;
+use App\Http\Resources\TherapyResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,6 +44,11 @@ class PatientController extends Controller
         return response()->json(
             new Patient(Person::with(['individual', 'relatives', 'addresses', 'contacts'])->findOrFail($id))
         );
+    }
+
+    public function activeTherapy($patient_id)
+    {
+        return new TherapyResource (Therapy::showActive($patient_id));
     }
 
     public function update(PatientRequest $request, $id)

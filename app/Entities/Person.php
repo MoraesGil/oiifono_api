@@ -34,6 +34,10 @@ class Person extends Model
         return $this->hasOne(Individual::class);
     }
 
+    public function activeHospitalization(){
+        return Hospitalization::whereNull('discharged')->wherePersonId($this->{$this->primaryKey})->first();
+    }
+
     public function doctor()
     {
         return $this->hasOne(Doctor::class);

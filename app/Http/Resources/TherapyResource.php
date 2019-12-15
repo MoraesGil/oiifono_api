@@ -22,7 +22,7 @@ class TherapyResource extends JsonResource
                 return $totalProgress + $objectiveProgress;
             });
 
-
+        $this->withoutWrapping();
         return array_merge(
             parent::toArray($request),
             [
