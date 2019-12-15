@@ -15,9 +15,7 @@ class ScheduleCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $this->withoutWrapping();
-        return $this->collection->groupBy(function (Schedule $schedule) {
-            return $schedule->start_at->format('Y-m-d');
-        });
+        return parent::toArray($request);
+
     }
 }

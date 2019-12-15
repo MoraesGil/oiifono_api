@@ -15,11 +15,6 @@ class Patient extends JsonResource
      */
     public function toArray($request)
     {
-        $hospitalization = $this->individual->hospitalization();
-
-        if ($hospitalization)
-            $therapyId = $hospitalization->therapies()->first()->id;
-
         return [
             'id' => $this->id,
             'birthdate' => $this->individual->birthdate->format('Y-m-d'),
@@ -31,7 +26,6 @@ class Patient extends JsonResource
             'name' => $this->name,
             'nickname' => $this->nickname,
             'picture' => $this->picture,
-            'therapy_id' => $therapyId,
             'relations' => $this->whenLoaded('relatives'),
             'addresses' => $this->whenLoaded('addresses'),
             'contacts' => $this->whenLoaded('contacts')

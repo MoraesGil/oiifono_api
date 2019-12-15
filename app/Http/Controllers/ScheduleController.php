@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 use App\Entities\Doctor;
 use App\Http\Requests\Schedule\CreateScheduleRequest;
 use App\Http\Requests\Schedule\NewScheduleRequest;
+use App\Http\Resources\ScheduleCollection;
 use Illuminate\Support\Collection;
 
 class ScheduleController extends Controller
@@ -24,7 +25,8 @@ class ScheduleController extends Controller
 
         $doctorId = $request->get('doctor_id', $request->user()->person_id);
         $schedules = Schedule::getSchedulesFromInterval($doctorId, $fromDate, $toDate);
-        return $schedules;
+
+        return new ScheduleCollection($schedules);
     }
 
     public function update(UpdateScheduleRequest $request, ScheduleService $scheduler, $id)

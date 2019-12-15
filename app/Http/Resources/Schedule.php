@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\Patient;
 class Schedule extends JsonResource
 {
     /**
@@ -14,14 +14,15 @@ class Schedule extends JsonResource
      */
     public function toArray($request)
     {
+        $this->withoutWrapping();
         return [
             'id' => $this->id,
             'start_at' => $this->start_at->format('H:i'),
             'end_at' => $this->end_at->format('H:i'),
             'confirmed' => $this->confirmed,
             'absence_by' => $this->absence_by,
-            'parent_id' => $this->parent_id,
-            'person_id' => $this->person_id,
+            'parent' => $this->parent_id,
+            'patient' => new Patient($this->patient->person),
             'rescheduled' => !!count($this->reschedules ? $this->reschedules : [])
         ];
     }
