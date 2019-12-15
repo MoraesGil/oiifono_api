@@ -17,6 +17,7 @@ class Schedule extends JsonResource
         $this->withoutWrapping();
         return [
             'id' => $this->id,
+            'date' => $this->date,
             'start_at' => $this->start_at->format('H:i'),
             'end_at' => $this->end_at->format('H:i'),
             'confirmed' => $this->confirmed,
