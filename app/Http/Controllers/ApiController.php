@@ -103,7 +103,8 @@ class ApiController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $expiration
+            'expires_in' => $expiration,
+            'me' => new UserResource($this->guard()->user())
         ]);
     }
 
