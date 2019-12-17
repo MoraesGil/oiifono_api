@@ -29,6 +29,13 @@ class ScheduleController extends Controller
         return new ScheduleCollection($schedules);
     }
 
+    public function futureSchedulesDays(Request $request)
+    {
+        $doctorId = $request->get('doctor_id', $request->user()->person_id);
+        return response()->json(Schedule::getDoctorFutureSchedulesDays($doctorId), 200);
+    }
+
+
     public function update(UpdateScheduleRequest $request, ScheduleService $scheduler, $id)
     {
         $schedule = Schedule::query()->findOrFail($id);

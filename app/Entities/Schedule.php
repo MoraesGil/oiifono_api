@@ -34,7 +34,8 @@ class Schedule extends Model
     ];
 
 
-    public function getDateAttribute(){
+    public function getDateAttribute()
+    {
         return $this->start_at->toDateString();
     }
 
@@ -79,18 +80,27 @@ class Schedule extends Model
             ->get();
     }
 
-    public static function getPatientFutureSchedules($personId)
+    public static function getPatientFutureSchedules($personId, $builder = false)
     {
-        return self::getFutureSchedules()
-            ->where('person_id', $personId)
-            ->get();
+        $builder = self::getFutureSchedules()
+            ->where('person_id', $personId);
+
+        return $builder ? $builder : $builder->get();
     }
 
-    public static function getDoctorFutureSchedules($doctorId)
+    public static function getDoctorFutureSchedules($doctorId, $builder = false)
     {
-        return self::getFutureSchedules()
-            ->where('doctor_id', $doctorId)
-            ->get();
+        $builder =  self::getFutureSchedules()
+            ->where('doctor_id', $doctorId);
+
+        return $builder ? $builder : $builder->get();
+    }
+
+    public static function getDoctorFutureSchedulesDays($doctorId)
+    {
+        return self::getDoctorFutureSchedules($doctorId,true)
+        ->select('start_at')->get()
+        ->pluck('date')->unique()->values()->all();
     }
 
     protected static function getFutureSchedules()

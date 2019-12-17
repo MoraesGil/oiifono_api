@@ -38,5 +38,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::patch('schedules/{id}/absence', 'ScheduleController@absence')->name('schedule.absence');
     Route::get('schedules/generator/{therapyId}/best-schedules', 'ScheduleController@bestSchedules')->name('schedules.generator.suggestions');
     Route::post('schedules/generator/{therapyId}', 'ScheduleController@generate')->name('schedules.generator.store');
+    Route::get('schedules/future-days', 'ScheduleController@futureSchedulesDays')->name('schedules.futuredays');
 
 });
