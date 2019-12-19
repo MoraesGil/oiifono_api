@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     // therapy
     Route::get('patients/{id}/active-therapy', 'PatientController@activeTherapy')->name('patients.activeTherapy');
+    Route::post('patients/{id}/discharge', 'HospitalizationController@discharge')->name('patients.discharge');
     Route::resource('therapies', 'TherapyController', ['only' => ['store', 'show']]);
     Route::resource('objectives', 'ObjectiveController', ['except' => ['create', 'edit']]);
     Route::get('typeahead/pathologies', 'PathologyController@typeahead')->name('typeahead.pathologies');

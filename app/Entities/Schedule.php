@@ -22,7 +22,6 @@ class Schedule extends Model
     ];
 
     protected $casts = [
-        'date' => 'datetime:H:i',
         'start_at' => 'datetime:H:i',
         'end_at' => 'datetime:H:i',
     ];
